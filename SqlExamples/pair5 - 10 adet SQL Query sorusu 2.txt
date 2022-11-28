@@ -1,0 +1,68 @@
+--verilen sipariş başlıklarını en azdan en çok ' a sırala:
+SELECT at.name as "Sipariş başlıkları",COUNT(*) as "Sayısı" FROM orders o
+right join address a
+on o.addressid=a.id
+inner join addresstitle at
+on at.id=a.addresstitleid
+GROUP BY at.name
+ORDER BY COUNT(*) ASC
+
+--hangi kargo şirketinin ne kadar teslimat yaptığını büyükten küçüğe sırala:
+
+SELECT c.name as "Kargo",COUNT(o.cargoid) "Sipariş Sayısı" FROM orders o
+right join cargo c
+on c.id=o.cargoid
+GROUP BY c.name
+ORDER BY COUNT(o.cargoid) DESC
+
+
+
+--stok sayısı 10 ile 50 arasındaki product ' ları bize getir:
+
+SELECT * from products
+WHERE stock BETWEEN 10 AND 50
+
+
+-- kot ile jean in bize stok sayısını getirsin (in kullanımı) :
+
+SELECT name as "Ürün adı", stock as "Stoğu" FROM products
+WHERE name IN('coat','jean','tshirt')
+
+
+--product'ı olan veya olmayan bütün kategorileri bize göster : 
+
+Select * from categories c
+left join productcategories pc
+on c.id=pc.categoryid
+
+
+--product ı olmayan kategorileri bize göster :
+
+Select c.id, COUNT(productid) from categories c
+left join productcategories pc
+on c.id=pc.categoryid
+group by c.id
+HAVING COUNT(productid)<1
+
+
+--hangi kategoriden kaç tane product var
+
+Select c.id, COUNT(productid) from categories c
+left join productcategories pc
+on c.id=pc.categoryid
+group by c.id
+
+-- Product tablosuna ismi shoes olan - 230 unitprice 'ı olan ve 150 adet 
+--stock ' u olan ve rengi mavi olan 1 tane daha ürün ekle :
+
+INSERT INTO products (name,unitprice,stock,colorsizeid) VALUES('shoes',230,150,3)
+
+-- colors tablosundan black rengini sil. :
+
+DELETE FROM colors
+WHERE id = 6
+
+-- products tablosundaki tshirt ün fiyatını 60 , stoğunu da 80 olarak güncelle
+UPDATE products
+SET stock = 80, unitprice = 60
+WHERE id = 4

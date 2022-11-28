@@ -260,3 +260,8 @@ HAVING COUNT(productid)>1
 #### Kod Çıktısı :
 
 ![15](https://user-images.githubusercontent.com/96656340/204262836-67948736-7f57-44e2-8fa0-5309aeaf4999.PNG)
+
+
+
+
+Beni [Linkedin](www.linkedin.com/in/hakancetin39) 'den takip edebilirsiniz. 

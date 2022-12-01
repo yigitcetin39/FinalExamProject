@@ -1,30 +1,34 @@
 package com.etiya.ecommercedemo5.entities.concretes;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
-@Table(name="colors")
+@Table(name = "productcategories")
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
-public class Color {
+@NoArgsConstructor
+
+
+public class ProductCategory {
+
     @Id
-    @Column(name="id")
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name="name")
-    private String name;
+    @ManyToOne
+    @JoinColumn(name = "categoryid")
+    private Category category;
 
-    @OneToMany(mappedBy = "color")
-    @JsonIgnore
-    private List<ColorSizeRelation> colorSizeRelations;
+    @ManyToOne
+    @JoinColumn(name = "productid")
+    private Product product;
+
+
 }

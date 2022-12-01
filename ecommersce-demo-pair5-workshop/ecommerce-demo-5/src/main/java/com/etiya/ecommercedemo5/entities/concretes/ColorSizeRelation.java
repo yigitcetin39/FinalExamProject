@@ -7,34 +7,26 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
-
 @Entity
-@Table(name="color_size_relations")
+@Table(name = "colorsizerelations")
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
+
 public class ColorSizeRelation {
+
     @Id
-    @Column(name="id")
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @ManyToOne
-    @JoinColumn(name="colorsid")
+    @JoinColumn(name = "colorsid")
     private Color color;
 
-
     @ManyToOne
-    @JoinColumn(name="sizeid")
+    @JoinColumn(name = "sizeid")
     private Size size;
-
-
-
-
-
-
-
-
 
 }

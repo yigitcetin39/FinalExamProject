@@ -17,7 +17,6 @@ public class ProductManager implements ProductService {
 
     //Spring IoC
 
-
     @Override
     public List<Product> getAll() {
         return productRepository.findAll();

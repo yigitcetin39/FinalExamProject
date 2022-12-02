@@ -31,5 +31,10 @@ public class Cargo {
     @JsonIgnore
     private List<Order> orders;
 
+    @Column(name = "price")
+    private int price;
+
+
+
 
 }

@@ -28,4 +28,8 @@ public class Size {
     @OneToMany(mappedBy = "size")
     @JsonIgnore
     private List<ColorSizeRelation> colorSizeRelations;
+
+    @Column(name = "stock")
+    private int stock;
+
 }

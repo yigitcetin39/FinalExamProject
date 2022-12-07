@@ -2,6 +2,9 @@ package com.etiya.ecommercedemo5.business.concretes;
 
 import com.etiya.ecommercedemo5.business.abstracts.SizeService;
 
+import com.etiya.ecommercedemo5.business.dtos.request.size.AddSizeRequest;
+import com.etiya.ecommercedemo5.business.dtos.response.product.AddProductResponse;
+import com.etiya.ecommercedemo5.business.dtos.response.size.AddSizeResponse;
 import com.etiya.ecommercedemo5.entities.concretes.Size;
 
 import com.etiya.ecommercedemo5.repository.abstracts.SizeRepository;
@@ -33,5 +36,17 @@ public class SizeManager implements SizeService {
     @Override
     public Size getByName(String name) {
         return sizeRepository.findByName(name);
+    }
+
+    @Override
+    public AddSizeResponse addSize(AddSizeRequest addSizeRequest) {
+        Size size = new Size();
+        size.setName(addSizeRequest.getName());
+        size.setStock(addSizeRequest.getStock());
+        Size savedSize = sizeRepository.save(size);
+
+        AddSizeResponse response = new AddSizeResponse(savedSize.getId(), savedSize.getName(), savedSize.getStock());
+        return response;
+
     }
 }

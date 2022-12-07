@@ -20,4 +20,14 @@ public interface ProductRepository extends JpaRepository<Product,Integer> {
     @Query("Select p from Product as p WHERE name=:name")
     Product findByName(String name);
 
+    @Query("Select p from Product as p WHERE name=:prefix")
+    List<Product> findByNameStartingWith(String prefix);
+
+
+    List<Product> findByNameIgnoreCaseContaining(String name);
+
+    List<Product> findByNameOrderByNameAsc(String name);
+
+
+
 }

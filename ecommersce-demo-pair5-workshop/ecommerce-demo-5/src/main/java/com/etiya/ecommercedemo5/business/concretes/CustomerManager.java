@@ -2,6 +2,8 @@ package com.etiya.ecommercedemo5.business.concretes;
 
 import com.etiya.ecommercedemo5.business.abstracts.CustomerService;
 
+import com.etiya.ecommercedemo5.business.dtos.request.customer.AddCustomerRequest;
+import com.etiya.ecommercedemo5.business.dtos.response.customer.AddCustomerResponse;
 import com.etiya.ecommercedemo5.entities.concretes.Customer;
 import com.etiya.ecommercedemo5.repository.abstracts.CustomerRepository;
 import lombok.AllArgsConstructor;
@@ -41,4 +43,20 @@ public class CustomerManager implements CustomerService {
         return customerRepository.findAllCustomerByIdOrderByIdAsc(id);
     }
 
+    @Override
+    public AddCustomerResponse addCustomer(AddCustomerRequest addCustomerRequest) {
+        Customer customer = new Customer();
+        customer.setFirstname(addCustomerRequest.getFirstname());
+        customer.setLastname(addCustomerRequest.getLastname());
+        customer.setPhonenumber(addCustomerRequest.getPhonenumber());
+        customer.setBirthday(addCustomerRequest.getBirthday());
+        Customer savedCustomer = customerRepository.save(customer);
+
+        AddCustomerResponse response =
+                new AddCustomerResponse(savedCustomer.getId(),savedCustomer.getFirstname(),savedCustomer.getLastname(),
+                        savedCustomer.getPhonenumber(),savedCustomer.getBirthday());
+        return response;
+
+
+    }
 }

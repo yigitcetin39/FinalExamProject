@@ -1,8 +1,14 @@
 package com.etiya.ecommercedemo5.api.controllers;
 
 import com.etiya.ecommercedemo5.business.abstracts.CargoService;
+import com.etiya.ecommercedemo5.business.dtos.request.cargo.AddCargoRequest;
+import com.etiya.ecommercedemo5.business.dtos.request.category.AddCategoryRequest;
+import com.etiya.ecommercedemo5.business.dtos.response.cargo.AddCargoResponse;
+import com.etiya.ecommercedemo5.business.dtos.response.category.AddCategoryResponse;
 import com.etiya.ecommercedemo5.entities.concretes.Cargo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -42,5 +48,15 @@ public class CargoController {
     @GetMapping("/getByName")
     public Cargo getByName(@RequestParam("name") String name){
         return cargoService.getByName(name);
+    }
+
+    // client
+    // server
+    // DTO => Data Transfer Object
+    // AddCategoryRequest => name,type
+    // ResponseEntity
+    @PostMapping("/add")
+    public ResponseEntity<AddCargoResponse> addCargo(@RequestBody AddCargoRequest addCargoRequest){
+        return new ResponseEntity<AddCargoResponse>(cargoService.addCargo(addCargoRequest), HttpStatus.CREATED);
     }
 }

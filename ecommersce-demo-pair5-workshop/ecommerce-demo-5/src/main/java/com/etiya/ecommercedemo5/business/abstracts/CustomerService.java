@@ -1,5 +1,7 @@
 package com.etiya.ecommercedemo5.business.abstracts;
 
+import com.etiya.ecommercedemo5.business.dtos.request.customer.AddCustomerRequest;
+import com.etiya.ecommercedemo5.business.dtos.response.customer.AddCustomerResponse;
 import com.etiya.ecommercedemo5.entities.concretes.Customer;
 
 
@@ -19,4 +21,6 @@ public interface CustomerService {
 
 
     List<Customer> getAllNameAsc(int id);
+
+    AddCustomerResponse addCustomer(AddCustomerRequest addCustomerRequest);
 }

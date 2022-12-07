@@ -22,7 +22,7 @@ public class ColorSizeRelation {
     private int id;
 
     @ManyToOne
-    @JoinColumn(name = "colorsid")
+    @JoinColumn(name = "colorid")
     private Color color;
 
     @ManyToOne

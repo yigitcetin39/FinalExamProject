@@ -18,6 +18,7 @@ import java.util.List;
 
 public class Size {
 
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id")
     private int id;

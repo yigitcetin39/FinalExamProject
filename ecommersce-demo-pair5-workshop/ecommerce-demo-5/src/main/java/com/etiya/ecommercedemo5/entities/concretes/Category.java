@@ -11,7 +11,10 @@ import java.util.List;
 
 @Entity
 @Table(name = "categories")
-
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 public class Category {
     @Id
     @Column(name = "id")
@@ -21,32 +24,14 @@ public class Category {
     @Column(name = "name")
     private String name;
 
+    @Column(name="type")
+    private String type;
+
     @OneToMany(mappedBy = "category" )
     @JsonIgnore
     private List<ProductCategory> productCategories;
 
-    @Entity
-    @Table(name = "cargo")
-    @Getter
-    @Setter
-    @AllArgsConstructor
-    @NoArgsConstructor
 
 
-    public static class Cargo {
 
-        @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-        @Column(name = "id")
-        private int id;
-
-        @Column(name = "name")
-        private String name;
-
-        @OneToMany(mappedBy = "cargo")
-        @JsonIgnore
-        private List<Order> orders;
-
-
-    }
 }

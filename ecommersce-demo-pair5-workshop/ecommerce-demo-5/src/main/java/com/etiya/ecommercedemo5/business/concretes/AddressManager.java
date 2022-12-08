@@ -38,17 +38,10 @@ public class AddressManager implements AddressService {
     }
 
 
-
-
-
-
     @Override
     public List<Address> getByName(String street) {
-        return addressRepository.findByName(street).getAddress();
+        return addressRepository.findByName(street);
     }
-
-
-
 
     @Override
     public AddAddressResponse addAddress(AddAddressRequest addAddressRequest) {
@@ -59,20 +52,10 @@ public class AddressManager implements AddressService {
 
 
 
-        City city = new City();
+        checkIfExistsCityId(addAddressRequest.getCityid());
 
-
-        checkIfExistsCityId(city.getId());
-
-        city = cityService.getById(addAddressRequest.getCityid());
+        City city = cityService.getById(addAddressRequest.getCityid());
         address.setCity(city);
-
-
-
-
-
-
-
 
 
         AddressTitle addressTitle = addressTitleService.getById(addAddressRequest.getAddrestitleid());
@@ -80,8 +63,6 @@ public class AddressManager implements AddressService {
 
         Customer customer = customerService.getById(addAddressRequest.getCustomerid());
         address.setCustomers(customer);
-
-
 
 
 
@@ -126,8 +107,5 @@ public class AddressManager implements AddressService {
         return customer;
         }
 */
-
-
-
 
 }

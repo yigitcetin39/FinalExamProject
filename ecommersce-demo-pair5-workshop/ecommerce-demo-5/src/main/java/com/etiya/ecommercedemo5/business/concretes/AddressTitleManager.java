@@ -3,6 +3,7 @@ package com.etiya.ecommercedemo5.business.concretes;
 import com.etiya.ecommercedemo5.business.abstracts.AddressTitleService;
 import com.etiya.ecommercedemo5.business.dtos.request.addresstitle.AddAddressTitleRequest;
 import com.etiya.ecommercedemo5.business.dtos.response.addresstitle.AddAddressTitleResponse;
+import com.etiya.ecommercedemo5.core.util.mapping.ModelMapperService;
 import com.etiya.ecommercedemo5.entities.concretes.AddressTitle;
 import com.etiya.ecommercedemo5.repository.abstracts.AddressTitleRepository;
 
@@ -15,6 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 public class AddressTitleManager implements AddressTitleService {
     private AddressTitleRepository addressTitleRepository;
+    private ModelMapperService modelMapperService;
     @Override
     public List<AddressTitle> getAll() {
         return addressTitleRepository.findAll();
@@ -34,7 +36,7 @@ public class AddressTitleManager implements AddressTitleService {
     @Override
     public AddAddressTitleResponse addAddressTitle(AddAddressTitleRequest addAddressTitleRequest) {
         // MAPPING => AUTO MAPPER
-        AddressTitle addressTitle = new AddressTitle();
+        /*ddressTitle addressTitle = new AddressTitle();
         addressTitle.setName(addAddressTitleRequest.getName());
 
         //
@@ -46,6 +48,13 @@ public class AddressTitleManager implements AddressTitleService {
         AddAddressTitleResponse response =
                 new AddAddressTitleResponse(savedAddresTitle.getId(), savedAddresTitle.getName());
         //
-        return response;
+        return response;*/
+
+        // MAPPING => AUTO MAPPER
+        AddressTitle addressTitle =
+                modelMapperService.getMapper().map(addAddressTitleRequest,AddressTitle.class);
+        AddAddressTitleResponse addAddressTitleResponse=
+                modelMapperService.getMapper().map(addressTitleRepository.save(addressTitle),AddAddressTitleResponse.class);
+        return addAddressTitleResponse;
     }
 }

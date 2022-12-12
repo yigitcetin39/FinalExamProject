@@ -2,10 +2,12 @@ package com.etiya.ecommercedemo5.api.controllers;
 
 import com.etiya.ecommercedemo5.business.abstracts.ProductService;
 import com.etiya.ecommercedemo5.business.constants.Paths;
+import com.etiya.ecommercedemo5.business.dtos.ProductDTO;
 import com.etiya.ecommercedemo5.business.dtos.request.cargo.AddCargoRequest;
 import com.etiya.ecommercedemo5.business.dtos.request.product.AddProductRequest;
 import com.etiya.ecommercedemo5.business.dtos.response.cargo.AddCargoResponse;
 import com.etiya.ecommercedemo5.business.dtos.response.product.AddProductResponse;
+import com.etiya.ecommercedemo5.core.util.results.DataResult;
 import com.etiya.ecommercedemo5.entities.concretes.Product;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -80,6 +82,12 @@ public class ProductsController {
     @PostMapping("/add")
     public ResponseEntity<AddProductResponse> addProduct(@RequestBody @Valid AddProductRequest addProductRequest){
         return new ResponseEntity<AddProductResponse>(productService.addProduct(addProductRequest), HttpStatus.CREATED);
+    }
+
+
+    @GetMapping("/findByExampleDTO")
+    public DataResult<List<ProductDTO>> findByExample(int id){
+        return this.productService.findByExampleProduct(id);
     }
 
 

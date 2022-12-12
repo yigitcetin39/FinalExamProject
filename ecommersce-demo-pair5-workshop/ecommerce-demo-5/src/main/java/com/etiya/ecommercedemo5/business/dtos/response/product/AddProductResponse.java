@@ -1,6 +1,6 @@
 package com.etiya.ecommercedemo5.business.dtos.response.product;
 
-import com.etiya.ecommercedemo5.entities.concretes.ColorSizeRelation;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

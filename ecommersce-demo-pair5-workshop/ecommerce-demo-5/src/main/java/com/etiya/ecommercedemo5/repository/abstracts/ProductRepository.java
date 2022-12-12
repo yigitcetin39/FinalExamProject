@@ -1,5 +1,6 @@
 package com.etiya.ecommercedemo5.repository.abstracts;
 
+import com.etiya.ecommercedemo5.business.dtos.ProductDTO;
 import com.etiya.ecommercedemo5.entities.concretes.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -30,6 +31,10 @@ public interface ProductRepository extends JpaRepository<Product,Integer> {
 
     @Query(value = "Select * from products where colorsizeid=:colorsizeid",nativeQuery = true)
     List<Product> findByExample(int colorsizeid);
+
+    @Query("Select new com.etiya.ecommercedemo5.business.dtos.ProductDTO(p.id,p.name)" +
+            " from Product p WHERE p.id=:id")
+    List<ProductDTO> findByExampleProduct(int id);
 
 
 

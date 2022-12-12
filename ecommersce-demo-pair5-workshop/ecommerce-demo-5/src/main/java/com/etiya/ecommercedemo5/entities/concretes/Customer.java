@@ -36,11 +36,11 @@ public class Customer {
     @Column(name = "birthday",nullable = true)
     private java.sql.Timestamp birthday;
 
-    @OneToMany(mappedBy = "customers")
+    @OneToMany(mappedBy = "customer")
     @JsonIgnore
     private List<Order> orders;
 
-    @OneToMany(mappedBy = "customers")
+    @OneToMany(mappedBy = "customer")
     @JsonIgnore
     private List<Address> address;
 

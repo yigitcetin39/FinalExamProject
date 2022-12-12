@@ -23,11 +23,11 @@ public class Order {
     private int id;
 
     @Column(name = "date")
-    private java.sql.Date date;
+    private java.sql.Date orderDate;
 
     @ManyToOne
     @JoinColumn(name = "customerid")
-    private Customer customers;
+    private Customer customer;
 
     @ManyToOne
     @JoinColumn(name = "addressid")

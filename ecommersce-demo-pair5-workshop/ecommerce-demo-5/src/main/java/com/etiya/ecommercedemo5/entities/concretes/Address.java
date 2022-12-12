@@ -36,7 +36,7 @@ public class Address {
 
     @ManyToOne
     @JoinColumn(name = "customerid")
-    private Customer customers;
+    private Customer customer;
 
     @OneToMany(mappedBy = "address")
     @JsonIgnore

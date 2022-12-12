@@ -3,9 +3,12 @@ package com.etiya.ecommercedemo5.business.concretes;
 
 import com.etiya.ecommercedemo5.business.abstracts.ColorSizeRelationService;
 import com.etiya.ecommercedemo5.business.abstracts.ProductService;
+import com.etiya.ecommercedemo5.business.dtos.ProductDTO;
 import com.etiya.ecommercedemo5.business.dtos.request.product.AddProductRequest;
 import com.etiya.ecommercedemo5.business.dtos.response.product.AddProductResponse;
 import com.etiya.ecommercedemo5.core.util.mapping.ModelMapperService;
+import com.etiya.ecommercedemo5.core.util.results.DataResult;
+import com.etiya.ecommercedemo5.core.util.results.SuccessDataResult;
 import com.etiya.ecommercedemo5.entities.concretes.Product;
 import com.etiya.ecommercedemo5.repository.abstracts.ProductRepository;
 import lombok.AllArgsConstructor;
@@ -95,6 +98,16 @@ public class ProductManager implements ProductService {
 
 
     }
+
+    @Override
+    public DataResult<List<ProductDTO>> findByExampleProduct(int id) {
+        List<ProductDTO> response = productRepository.findByExampleProduct(id);
+        return new SuccessDataResult<List<ProductDTO>>(response); // mesaj yazınca gelmiyor
+
+        //ProductDTO response = productRepository.findByExample(id);
+        // return new SuccessDataResult<ProductDTO>(response,"Bu ürün listelendi"); (this.productRepository.findByExample(id)
+    }
+
 
     @Override
     public List<Product> getByExample(int colorsizeid) {

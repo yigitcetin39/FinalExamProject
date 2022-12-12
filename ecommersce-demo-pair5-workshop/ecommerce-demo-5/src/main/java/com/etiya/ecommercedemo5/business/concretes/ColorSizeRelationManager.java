@@ -5,6 +5,7 @@ import com.etiya.ecommercedemo5.business.abstracts.ColorSizeRelationService;
 import com.etiya.ecommercedemo5.business.abstracts.SizeService;
 import com.etiya.ecommercedemo5.business.dtos.request.colorsizerelation.AddColorSizeRelationRequest;
 import com.etiya.ecommercedemo5.business.dtos.response.colorsizerelation.AddColorSizeRelationResponse;
+import com.etiya.ecommercedemo5.core.util.mapping.ModelMapperService;
 import com.etiya.ecommercedemo5.entities.concretes.Color;
 import com.etiya.ecommercedemo5.entities.concretes.ColorSizeRelation;
 import com.etiya.ecommercedemo5.entities.concretes.Size;
@@ -19,6 +20,7 @@ import java.util.List;
 public class ColorSizeRelationManager implements ColorSizeRelationService {
 
     private ColorSizeRepository colorSizeRepository;
+    private ModelMapperService modelMapperService;
     private SizeService sizeService;
     private ColorService colorService;
     @Override
@@ -34,7 +36,7 @@ public class ColorSizeRelationManager implements ColorSizeRelationService {
     @Override
     public AddColorSizeRelationResponse addColorSizeRelation(AddColorSizeRelationRequest addColorSizeRelationRequest) {
         // MAPPING => AUTO MAPPER
-        ColorSizeRelation colorSizeRelation = new ColorSizeRelation();
+        /*ColorSizeRelation colorSizeRelation = new ColorSizeRelation();
 
         Color color = colorService.getById(addColorSizeRelationRequest.getColorId());
         colorSizeRelation.setColor(color);
@@ -52,7 +54,15 @@ public class ColorSizeRelationManager implements ColorSizeRelationService {
                 new AddColorSizeRelationResponse(savedColorSizeRelation.getId(),
                         savedColorSizeRelation.getColor().getId(),
                         savedColorSizeRelation.getSize().getId());
-        return response;
+        return response;*/
+
+        // MAPPING => AUTO MAPPER
+
+        ColorSizeRelation colorSizeRelation =
+                modelMapperService.getMapper().map(addColorSizeRelationRequest,ColorSizeRelation.class);
+        AddColorSizeRelationResponse addColorSizeRelationResponse =
+                modelMapperService.getMapper().map(colorSizeRepository.save(colorSizeRelation),AddColorSizeRelationResponse.class);
+        return addColorSizeRelationResponse;
     }
 
 

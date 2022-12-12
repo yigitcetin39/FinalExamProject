@@ -3,6 +3,7 @@ package com.etiya.ecommercedemo5.business.concretes;
 import com.etiya.ecommercedemo5.business.abstracts.ColorService;
 import com.etiya.ecommercedemo5.business.dtos.request.color.AddColorRequest;
 import com.etiya.ecommercedemo5.business.dtos.response.color.AddColorResponse;
+import com.etiya.ecommercedemo5.core.util.mapping.ModelMapperService;
 import com.etiya.ecommercedemo5.entities.concretes.Color;
 import com.etiya.ecommercedemo5.repository.abstracts.ColorRepository;
 import lombok.AllArgsConstructor;
@@ -16,6 +17,7 @@ import java.util.List;
 public class ColorManager implements ColorService {
 
     private ColorRepository colorRepository;
+    private ModelMapperService modelMapperService;
 
     @Override
     public List<Color> getAll() {
@@ -33,7 +35,7 @@ public class ColorManager implements ColorService {
     @Override
     public AddColorResponse addColor(AddColorRequest addColorRequest) {
         // MAPPING => AUTO MAPPER
-        Color color = new Color();
+        /*Color color = new Color();
         color.setName(addColorRequest.getName());
 
         //
@@ -45,6 +47,13 @@ public class ColorManager implements ColorService {
         AddColorResponse response =
                 new AddColorResponse(savedColor.getId(), savedColor.getName());
         //
-        return response;
+        return response;*/
+
+        // MAPPING => AUTO MAPPER
+        Color color =
+                modelMapperService.getMapper().map(addColorRequest,Color.class);
+        AddColorResponse addColorResponse =
+                modelMapperService.getMapper().map(colorRepository.save(color),AddColorResponse.class);
+        return addColorResponse;
     }
 }

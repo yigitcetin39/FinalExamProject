@@ -11,9 +11,9 @@ import lombok.Setter;
 @NoArgsConstructor
 public class AddAddressResponse {
     private int id;
-    private int addresstitleid;
-    private int cityid;
+    private int addresstitleId;
+    private int cityId;
     private String street;
-    private int customerid;
+    private int customerId;
 
 }

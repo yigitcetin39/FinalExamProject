@@ -6,6 +6,7 @@ import com.etiya.ecommercedemo5.business.abstracts.CargoService;
 
 import com.etiya.ecommercedemo5.business.dtos.request.cargo.AddCargoRequest;
 import com.etiya.ecommercedemo5.business.dtos.response.cargo.AddCargoResponse;
+import com.etiya.ecommercedemo5.core.util.mapping.ModelMapperService;
 import com.etiya.ecommercedemo5.entities.concretes.Cargo;
 
 import com.etiya.ecommercedemo5.repository.abstracts.CargoRepository;
@@ -19,6 +20,7 @@ import java.util.List;
 public class CargoManager implements CargoService {
 
     private CargoRepository cargoRepository;
+    private ModelMapperService modelMapperService;
     @Override
     public List<Cargo> getAll() {
         return cargoRepository.findAll();
@@ -42,7 +44,7 @@ public class CargoManager implements CargoService {
     @Override
     public AddCargoResponse addCargo(AddCargoRequest addCargoRequest) {
         // MAPPING => AUTO MAPPER
-        Cargo cargo = new Cargo();
+        /*Cargo cargo = new Cargo();
         cargo.setName(addCargoRequest.getName());
         cargo.setPrice(addCargoRequest.getPrice());
         //
@@ -54,6 +56,12 @@ public class CargoManager implements CargoService {
         AddCargoResponse response =
                 new AddCargoResponse(savedCargo.getId(), savedCargo.getName(), savedCargo.getPrice());
         //
-        return response;
+        return response;*/
+
+        Cargo cargo =
+                modelMapperService.getMapper().map(addCargoRequest,Cargo.class);
+        AddCargoResponse addCargoResponse =
+                modelMapperService.getMapper().map(cargoRepository.save(cargo),AddCargoResponse.class);
+        return addCargoResponse;
     }
 }

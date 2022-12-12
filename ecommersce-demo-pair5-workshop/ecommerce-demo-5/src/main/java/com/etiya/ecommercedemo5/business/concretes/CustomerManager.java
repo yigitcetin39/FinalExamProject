@@ -4,6 +4,7 @@ import com.etiya.ecommercedemo5.business.abstracts.CustomerService;
 
 import com.etiya.ecommercedemo5.business.dtos.request.customer.AddCustomerRequest;
 import com.etiya.ecommercedemo5.business.dtos.response.customer.AddCustomerResponse;
+import com.etiya.ecommercedemo5.core.util.mapping.ModelMapperService;
 import com.etiya.ecommercedemo5.entities.concretes.Customer;
 import com.etiya.ecommercedemo5.repository.abstracts.CustomerRepository;
 import lombok.AllArgsConstructor;
@@ -16,6 +17,7 @@ import java.util.List;
 @AllArgsConstructor
 public class CustomerManager implements CustomerService {
     private CustomerRepository customerRepository;
+    private ModelMapperService modelMapperService;
     @Override
     public List<Customer> getAll() {
         return customerRepository.findAll();
@@ -45,7 +47,7 @@ public class CustomerManager implements CustomerService {
 
     @Override
     public AddCustomerResponse addCustomer(AddCustomerRequest addCustomerRequest) {
-        Customer customer = new Customer();
+        /*Customer customer = new Customer();
         customer.setFirstname(addCustomerRequest.getFirstname());
         customer.setLastname(addCustomerRequest.getLastname());
         customer.setPhonenumber(addCustomerRequest.getPhonenumber());
@@ -55,7 +57,13 @@ public class CustomerManager implements CustomerService {
         AddCustomerResponse response =
                 new AddCustomerResponse(savedCustomer.getId(),savedCustomer.getFirstname(),savedCustomer.getLastname(),
                         savedCustomer.getPhonenumber(),savedCustomer.getBirthday());
-        return response;
+        return response;*/
+
+        Customer customer =
+                modelMapperService.getMapper().map(addCustomerRequest,Customer.class);
+        AddCustomerResponse addCustomerResponse =
+                modelMapperService.getMapper().map(customerRepository.save(customer),AddCustomerResponse.class);
+        return addCustomerResponse;
 
 
     }

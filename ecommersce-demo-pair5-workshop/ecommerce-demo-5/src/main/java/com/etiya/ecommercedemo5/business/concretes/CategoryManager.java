@@ -3,10 +3,14 @@ package com.etiya.ecommercedemo5.business.concretes;
 import com.etiya.ecommercedemo5.business.abstracts.CategoryService;
 import com.etiya.ecommercedemo5.business.dtos.request.category.AddCategoryRequest;
 import com.etiya.ecommercedemo5.business.dtos.response.category.AddCategoryResponse;
+import com.etiya.ecommercedemo5.core.util.exceptions.BusinessException;
 import com.etiya.ecommercedemo5.entities.concretes.Category;
 import com.etiya.ecommercedemo5.repository.abstracts.CategoryRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 
 import java.util.List;
@@ -54,8 +58,11 @@ public class CategoryManager implements CategoryService {
         boolean isExists = categoryRepository.existsCategoryByName(name);
         if(isExists) // Veritabanımda bu isimde bir kategori mevcut!!
 
-            throw new RuntimeException("Bu isimle bir kategori zaten mevcut!");
+            throw new BusinessException("Bu isimle bir kategori zaten mevcut!");
     }
+
+
+
 
 
 }

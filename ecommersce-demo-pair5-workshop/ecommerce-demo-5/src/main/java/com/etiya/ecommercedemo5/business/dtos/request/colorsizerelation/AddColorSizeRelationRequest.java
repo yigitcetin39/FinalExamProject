@@ -11,7 +11,7 @@ import lombok.Setter;
 @Setter
 public class AddColorSizeRelationRequest {
 
-    private int sizeid;
-    private int colorid;
+    private int sizeId;
+    private int colorId;
 
 }

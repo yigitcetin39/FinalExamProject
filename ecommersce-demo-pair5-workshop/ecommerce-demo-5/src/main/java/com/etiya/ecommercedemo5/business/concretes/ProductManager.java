@@ -1,14 +1,16 @@
 package com.etiya.ecommercedemo5.business.concretes;
 
+
 import com.etiya.ecommercedemo5.business.abstracts.ColorSizeRelationService;
 import com.etiya.ecommercedemo5.business.abstracts.ProductService;
 import com.etiya.ecommercedemo5.business.dtos.request.product.AddProductRequest;
 import com.etiya.ecommercedemo5.business.dtos.response.product.AddProductResponse;
-import com.etiya.ecommercedemo5.entities.concretes.ColorSizeRelation;
+import com.etiya.ecommercedemo5.core.util.mapping.ModelMapperService;
 import com.etiya.ecommercedemo5.entities.concretes.Product;
 import com.etiya.ecommercedemo5.repository.abstracts.ProductRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.modelmapper.ModelMapper;
 
 import java.util.List;
 
@@ -17,9 +19,22 @@ import java.util.List;
 public class ProductManager implements ProductService {
     private ProductRepository productRepository;
     //ColorsizeService Gelicek id için
+    //private ColorSizeRelationService colorSizeRelationService;
+
+    //ModelMapper
     private ColorSizeRelationService colorSizeRelationService;
 
+    private ModelMapperService modelMapperService;
 
+    @Override
+    public List<Product> getByNameStartingWith(String prefix) {
+        return productRepository.findByNameStartingWith(prefix);
+    }
+
+    @Override
+    public List<Product> getByNameLike(String name) {
+        return productRepository.findByNameIgnoreCaseContaining(name);
+    }
 
     @Override
     public List<Product> getAll() {
@@ -41,15 +56,6 @@ public class ProductManager implements ProductService {
         return productRepository.findByName(name);
     }
 
-    @Override
-    public List<Product> getByNameStartingWith(String prefix) {
-        return productRepository.findByNameStartingWith(prefix);
-    }
-
-    @Override
-    public List<Product> getByNameLike(String name) {
-        return productRepository.findByNameIgnoreCaseContaining(name);
-    }
 
     @Override
     public List<Product> getByNameOrderAsc(String name) {
@@ -59,7 +65,7 @@ public class ProductManager implements ProductService {
     @Override
     public AddProductResponse addProduct(AddProductRequest addProductRequest) {
         // MAPPING => AUTO MAPPER
-        Product product = new Product();
+        /*Product product = new Product();
         product.setName(addProductRequest.getName());
         product.setUnitprice(addProductRequest.getUnitPrice());
         product.setStock(addProductRequest.getStock());
@@ -78,11 +84,20 @@ public class ProductManager implements ProductService {
                 new AddProductResponse(savedProduct.getId(), savedProduct.getName(), savedProduct.getUnitprice(),
                         savedProduct.getStock(),savedProduct.getColorSizeRelation().getId());
         //
-        return response;
+        return response; */
+
+
+        Product product =
+                modelMapperService.getMapper().map(addProductRequest,Product.class);
+        AddProductResponse addProductResponse =
+                modelMapperService.getMapper().map(productRepository.save(product),AddProductResponse.class);
+        return addProductResponse;
+
+
     }
 
-
-
-
-
+    @Override
+    public List<Product> getByExample(int colorsizeid) {
+        return productRepository.findByExample(colorsizeid);
+    }
 }

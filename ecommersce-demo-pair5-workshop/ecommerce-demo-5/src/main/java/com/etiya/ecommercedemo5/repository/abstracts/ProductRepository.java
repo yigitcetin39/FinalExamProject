@@ -28,6 +28,9 @@ public interface ProductRepository extends JpaRepository<Product,Integer> {
 
     List<Product> findByNameOrderByNameAsc(String name);
 
+    @Query(value = "Select * from products where colorsizeid=:colorsizeid",nativeQuery = true)
+    List<Product> findByExample(int colorsizeid);
+
 
 
 }

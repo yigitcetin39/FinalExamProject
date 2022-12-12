@@ -21,6 +21,6 @@ public class AddProductRequest {
     //stock 0 olamaz(validasyon)
     private double stock;
     @Positive(message = "Colorsizeid positive olmalıdır!")
-    private int colorsizeid;
+    private int colorSizeId;
 
 }

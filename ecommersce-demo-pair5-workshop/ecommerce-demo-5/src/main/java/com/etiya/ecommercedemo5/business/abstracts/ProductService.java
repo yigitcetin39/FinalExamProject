@@ -20,5 +20,7 @@ public interface ProductService {
 
     AddProductResponse addProduct(AddProductRequest addProductRequest);
 
+    List<Product> getByExample(int colorsizeid);
+
 
 }

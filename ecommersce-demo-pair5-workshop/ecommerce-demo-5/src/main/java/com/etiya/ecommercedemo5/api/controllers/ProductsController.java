@@ -47,6 +47,11 @@ public class ProductsController {
         return productService.getAllByStockGreaterThan(stock);
     }
 
+    @GetMapping("/getByExample")
+    public List<Product> getByExample(@RequestParam("colorsizeid") int colorsizeid){
+        return productService.getByExample(colorsizeid);
+    }
+
     @GetMapping("/getByName")
     public Product getByName(@RequestParam("name") String name){
         return productService.getByName(name);

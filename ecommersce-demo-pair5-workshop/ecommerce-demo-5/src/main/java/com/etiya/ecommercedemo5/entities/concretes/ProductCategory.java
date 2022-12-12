@@ -30,5 +30,4 @@ public class ProductCategory {
     @JoinColumn(name = "productid")
     private Product product;
 
-
 }

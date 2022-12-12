@@ -35,7 +35,7 @@ public class Product {
     @ManyToOne  //Eğer tabloda many gittiyse manytoOne yazılır
     @JoinColumn(name = "colorsizeid")
     @JsonIgnore
-    private ColorSizeRelation colorSizeRelation;
+    private ColorSizeRelation colorSize;
 
     @OneToMany(mappedBy = "product")
     @JsonIgnore

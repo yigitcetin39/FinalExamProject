@@ -45,12 +45,6 @@ public class Order {
     @JoinColumn(name = "productid")
     private Product product;
 
-    @OneToMany(mappedBy = "orderid")
-    @JsonIgnore
-    private List<Invoice> invoices;
-
-
-
 
 
 

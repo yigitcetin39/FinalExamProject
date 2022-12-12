@@ -36,10 +36,10 @@ public class ColorSizeRelationManager implements ColorSizeRelationService {
         // MAPPING => AUTO MAPPER
         ColorSizeRelation colorSizeRelation = new ColorSizeRelation();
 
-        Color color = colorService.getById(addColorSizeRelationRequest.getColorid());
+        Color color = colorService.getById(addColorSizeRelationRequest.getColorId());
         colorSizeRelation.setColor(color);
 
-        Size size = sizeService.getById(addColorSizeRelationRequest.getSizeid());
+        Size size = sizeService.getById(addColorSizeRelationRequest.getSizeId());
         colorSizeRelation.setSize(size);
 
 

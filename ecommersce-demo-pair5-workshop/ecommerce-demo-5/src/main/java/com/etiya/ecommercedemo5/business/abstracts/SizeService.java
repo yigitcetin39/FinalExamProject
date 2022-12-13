@@ -3,19 +3,20 @@ package com.etiya.ecommercedemo5.business.abstracts;
 
 import com.etiya.ecommercedemo5.business.dtos.request.size.AddSizeRequest;
 import com.etiya.ecommercedemo5.business.dtos.response.size.AddSizeResponse;
+import com.etiya.ecommercedemo5.core.util.results.DataResult;
 import com.etiya.ecommercedemo5.entities.concretes.Product;
 import com.etiya.ecommercedemo5.entities.concretes.Size;
 
 import java.util.List;
 
 public interface SizeService {
-    List<Size> getAllByStockGreaterThan(int stock);
+    DataResult<List<Size>> getAllByStockGreaterThan(int stock);
 
-    List<Size> getAll();
+    DataResult<List<Size>> getAll();
 
-    Size getById(int id);
+    DataResult<Size> getById(int id);
 
-    Size getByName(String name);
+    DataResult<Size> getByName(String name);
 
-    AddSizeResponse addSize(AddSizeRequest addSizeRequest);
+    DataResult<AddSizeResponse> addSize(AddSizeRequest addSizeRequest);
 }

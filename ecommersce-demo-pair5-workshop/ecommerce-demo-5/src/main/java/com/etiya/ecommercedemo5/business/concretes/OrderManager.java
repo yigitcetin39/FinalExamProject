@@ -1,9 +1,12 @@
 package com.etiya.ecommercedemo5.business.concretes;
 
 import com.etiya.ecommercedemo5.business.abstracts.OrderService;
+import com.etiya.ecommercedemo5.business.constants.Messages;
 import com.etiya.ecommercedemo5.business.dtos.request.order.AddOrderRequest;
 import com.etiya.ecommercedemo5.business.dtos.response.order.AddOrderResponse;
 import com.etiya.ecommercedemo5.core.util.mapping.ModelMapperService;
+import com.etiya.ecommercedemo5.core.util.results.DataResult;
+import com.etiya.ecommercedemo5.core.util.results.SuccessDataResult;
 import com.etiya.ecommercedemo5.entities.concretes.Order;
 import com.etiya.ecommercedemo5.repository.abstracts.OrderRepository;
 import lombok.AllArgsConstructor;
@@ -27,22 +30,26 @@ public class OrderManager implements OrderService {
     private ProductService productService;*/
 
     @Override
-    public List<Order> getAll() {
-        return orderRepository.findAll();
+    public DataResult<List<Order>> getAll() {
+        List<Order> response = this.orderRepository.findAll();
+        return new SuccessDataResult<List<Order>>(response, Messages.Order.getAllOrder);
     }
     @Override
-    public Order getById(int id) {
-        return orderRepository.findById(id).orElseThrow();
+    public DataResult<Order> getById(int id) {
+        Order response = this.orderRepository.findById(id).orElseThrow();
+        return new SuccessDataResult<Order>(response,Messages.Order.getByOrderId);
     }
     @Override
-    public List<Order> getByOrderDate(Date orderDate) {
-        return orderRepository.findByOrderDate(orderDate);
+    public DataResult<List<Order>> getByOrderDate(Date orderDate) {
+        List<Order> response = this.orderRepository.findByOrderDate(orderDate);
+        return new SuccessDataResult<List<Order>>(response,Messages.Order.getOrderDate);
     }
 
     @Override
-    public List<Order> getALlOrderByCargoCompany(String cargoCompany) {
+    public DataResult<List<Order>> getALlOrderByCargoCompany(String cargoCompany) {
         String cargoComp = cargoCompany.toLowerCase();
-        return orderRepository.getALlOrderByCargoCompany(cargoComp);
+        List<Order> response = this.orderRepository.getALlOrderByCargoCompany(cargoCompany);
+        return new SuccessDataResult<List<Order>>(response,Messages.Order.getAllOrderByCargoCompany);
     }
 
    /* @Override
@@ -52,12 +59,12 @@ public class OrderManager implements OrderService {
 
 
     @Override
-    public AddOrderResponse addOrder(AddOrderRequest addOrderRequest) {
+    public DataResult<AddOrderResponse> addOrder(AddOrderRequest addOrderRequest) {
 
         Order order = modelMapperService.getMapper().map(addOrderRequest,Order.class);
         AddOrderResponse addOrderResponse =
                 modelMapperService.getMapper().map(orderRepository.save(order),AddOrderResponse.class);
-        return addOrderResponse;
+        return new SuccessDataResult<AddOrderResponse>(addOrderResponse,Messages.Order.addOrder);
     }
 
 }

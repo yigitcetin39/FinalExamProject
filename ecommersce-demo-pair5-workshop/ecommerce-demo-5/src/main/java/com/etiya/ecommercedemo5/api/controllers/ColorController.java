@@ -4,6 +4,7 @@ package com.etiya.ecommercedemo5.api.controllers;
 import com.etiya.ecommercedemo5.business.abstracts.ColorService;
 import com.etiya.ecommercedemo5.business.dtos.request.color.AddColorRequest;
 import com.etiya.ecommercedemo5.business.dtos.response.color.AddColorResponse;
+import com.etiya.ecommercedemo5.core.util.results.DataResult;
 import com.etiya.ecommercedemo5.entities.concretes.Color;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,7 +20,7 @@ public class ColorController {
     private ColorService colorService;
 
     @GetMapping("/getAll")
-    public List<Color> getAll(){
+    public DataResult<List<Color>> getAll(){
         return colorService.getAll();
     }
 
@@ -29,7 +30,7 @@ public class ColorController {
     // AddCategoryRequest => name,type
     // ResponseEntity
     @PostMapping("/add")
-    public ResponseEntity<AddColorResponse> addColor(@RequestBody AddColorRequest addColorRequest){
-        return new ResponseEntity<AddColorResponse>(colorService.addColor(addColorRequest), HttpStatus.CREATED);
+    public ResponseEntity<DataResult<AddColorResponse>> addColor(@RequestBody AddColorRequest addColorRequest){
+        return new ResponseEntity<DataResult<AddColorResponse>>(colorService.addColor(addColorRequest), HttpStatus.CREATED);
     }
 }

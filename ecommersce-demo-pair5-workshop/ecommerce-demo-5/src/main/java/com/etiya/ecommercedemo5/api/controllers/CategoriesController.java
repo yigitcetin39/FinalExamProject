@@ -21,7 +21,7 @@ public class CategoriesController {
     private CategoryService categoryService;
 
     @GetMapping("")
-    public List<Category> getAll(){
+    public DataResult<List<Category>> getAll(){
         return categoryService.getAll();
     }
 
@@ -31,8 +31,8 @@ public class CategoriesController {
     // AddCategoryRequest => name,type
     // ResponseEntity
     @PostMapping("/add")
-    public ResponseEntity<AddCategoryResponse> addCategory(@RequestBody @Valid AddCategoryRequest addCategoryRequest){
-        return new ResponseEntity<AddCategoryResponse>(categoryService.addCategory(addCategoryRequest), HttpStatus.CREATED);
+    public ResponseEntity<DataResult<AddCategoryResponse>> addCategory(@RequestBody @Valid AddCategoryRequest addCategoryRequest){
+        return new ResponseEntity<DataResult<AddCategoryResponse>>(categoryService.addCategory(addCategoryRequest), HttpStatus.CREATED);
     }
 
     @GetMapping("/findByCategoryExampleDTO")

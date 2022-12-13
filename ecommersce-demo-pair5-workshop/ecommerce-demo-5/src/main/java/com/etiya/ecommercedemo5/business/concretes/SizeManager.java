@@ -2,10 +2,13 @@ package com.etiya.ecommercedemo5.business.concretes;
 
 import com.etiya.ecommercedemo5.business.abstracts.SizeService;
 
+import com.etiya.ecommercedemo5.business.constants.Messages;
 import com.etiya.ecommercedemo5.business.dtos.request.size.AddSizeRequest;
 import com.etiya.ecommercedemo5.business.dtos.response.product.AddProductResponse;
 import com.etiya.ecommercedemo5.business.dtos.response.size.AddSizeResponse;
 import com.etiya.ecommercedemo5.core.util.mapping.ModelMapperService;
+import com.etiya.ecommercedemo5.core.util.results.DataResult;
+import com.etiya.ecommercedemo5.core.util.results.SuccessDataResult;
 import com.etiya.ecommercedemo5.entities.concretes.Size;
 
 import com.etiya.ecommercedemo5.repository.abstracts.SizeRepository;
@@ -21,27 +24,31 @@ public class SizeManager implements SizeService {
     private SizeRepository sizeRepository;
     private ModelMapperService modelMapperService;
     @Override
-    public List<Size> getAll() {
-        return sizeRepository.findAll();
+    public DataResult<List<Size>> getAll() {
+        List<Size> response = sizeRepository.findAll();
+        return new SuccessDataResult<List<Size>>(response, Messages.Size.getAllSize);
     }
 
     @Override
-    public Size getById(int id) {
-        return sizeRepository.findById(id).orElseThrow();
+    public DataResult<Size> getById(int id) {
+        Size response = this.sizeRepository.findById(id).orElseThrow();
+        return new SuccessDataResult<Size>(response,Messages.Size.getBySizeId);
     }
 
     @Override
-    public List<Size> getAllByStockGreaterThan(int stock) {
-        return sizeRepository.findAllSizesByStockGreaterThanOrderByStockDesc(stock);
+    public DataResult<List<Size>> getAllByStockGreaterThan(int stock) {
+        List<Size> response = this.sizeRepository.findAllSizesByStockGreaterThanOrderByStockDesc(stock);
+        return new SuccessDataResult<List<Size>>(response,Messages.Size.getBySizeGreaterThanStock);
     }
 
     @Override
-    public Size getByName(String name) {
-        return sizeRepository.findByName(name);
+    public DataResult<Size> getByName(String name) {
+        Size response = this.sizeRepository.findByName(name);
+        return new SuccessDataResult<Size>(response,Messages.Size.getBySizeName);
     }
 
     @Override
-    public AddSizeResponse addSize(AddSizeRequest addSizeRequest) {
+    public DataResult<AddSizeResponse> addSize(AddSizeRequest addSizeRequest) {
         /*Size size = new Size();
         size.setName(addSizeRequest.getName());
         size.setStock(addSizeRequest.getStock());
@@ -54,7 +61,7 @@ public class SizeManager implements SizeService {
                 modelMapperService.getMapper().map(addSizeRequest,Size.class);
         AddSizeResponse addSizeResponse =
                 modelMapperService.getMapper().map(sizeRepository.save(size),AddSizeResponse.class);
-        return addSizeResponse;
+        return new SuccessDataResult<AddSizeResponse>(addSizeResponse,Messages.Size.addSize);
 
     }
 }

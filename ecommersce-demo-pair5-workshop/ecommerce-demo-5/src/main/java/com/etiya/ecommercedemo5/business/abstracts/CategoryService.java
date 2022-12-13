@@ -10,10 +10,10 @@ import com.etiya.ecommercedemo5.entities.concretes.Category;
 import java.util.List;
 
 public interface CategoryService {
-    List<Category> getAll();
-    Category getById(int id);
+    DataResult<List<Category>> getAll();
+    DataResult<Category> getById(int id);
 
-    AddCategoryResponse addCategory(AddCategoryRequest addCategoryRequest);
+    DataResult<AddCategoryResponse> addCategory(AddCategoryRequest addCategoryRequest);
 
     // JPA Repository SAVE methodu, eklenen veriyi geri döner.
 

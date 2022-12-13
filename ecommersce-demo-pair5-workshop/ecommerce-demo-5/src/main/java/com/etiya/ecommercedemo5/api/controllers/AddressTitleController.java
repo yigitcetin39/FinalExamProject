@@ -3,6 +3,7 @@ package com.etiya.ecommercedemo5.api.controllers;
 import com.etiya.ecommercedemo5.business.abstracts.AddressTitleService;
 import com.etiya.ecommercedemo5.business.dtos.request.addresstitle.AddAddressTitleRequest;
 import com.etiya.ecommercedemo5.business.dtos.response.addresstitle.AddAddressTitleResponse;
+import com.etiya.ecommercedemo5.core.util.results.DataResult;
 import com.etiya.ecommercedemo5.entities.concretes.AddressTitle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,22 +24,22 @@ public class AddressTitleController {
     }
 
     @GetMapping("/getAll")
-    public List<AddressTitle> getAll(){
+    public DataResult<List<AddressTitle>> getAll(){
         return addressTitleService.getAll();
     }
 
     @GetMapping("/getById")
-    public AddressTitle getById(@RequestParam("id") int id){
+    public DataResult<AddressTitle> getById(@RequestParam("id") int id){
         return addressTitleService.getById(id);
     }
     @GetMapping("{id}")
-    public AddressTitle getByIdPath(@PathVariable int id){
+    public DataResult<AddressTitle> getByIdPath(@PathVariable int id){
         return addressTitleService.getById(id);
     }
 
 
     @GetMapping("/getByName")
-    public AddressTitle getByName(@RequestParam("name") String name){
+    public DataResult<AddressTitle> getByName(@RequestParam("name") String name){
         return addressTitleService.getByName(name);
     }
 
@@ -48,8 +49,8 @@ public class AddressTitleController {
     // AddCategoryRequest => name,type
     // ResponseEntity
     @PostMapping("/add")
-    public ResponseEntity<AddAddressTitleResponse> addAddressTitle(@RequestBody AddAddressTitleRequest addAddressTitleRequest){
-        return new ResponseEntity<AddAddressTitleResponse>(addressTitleService.addAddressTitle(addAddressTitleRequest), HttpStatus.CREATED);
+    public ResponseEntity<DataResult<AddAddressTitleResponse>> addAddressTitle(@RequestBody AddAddressTitleRequest addAddressTitleRequest){
+        return new ResponseEntity<DataResult<AddAddressTitleResponse>>(addressTitleService.addAddressTitle(addAddressTitleRequest), HttpStatus.CREATED);
     }
 
 

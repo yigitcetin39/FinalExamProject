@@ -1,9 +1,12 @@
 package com.etiya.ecommercedemo5.business.concretes;
 
 import com.etiya.ecommercedemo5.business.abstracts.PaymentService;
+import com.etiya.ecommercedemo5.business.constants.Messages;
 import com.etiya.ecommercedemo5.business.dtos.request.payment.AddPaymentRequest;
 import com.etiya.ecommercedemo5.business.dtos.response.payment.AddPaymentResponse;
 import com.etiya.ecommercedemo5.core.util.mapping.ModelMapperService;
+import com.etiya.ecommercedemo5.core.util.results.DataResult;
+import com.etiya.ecommercedemo5.core.util.results.SuccessDataResult;
 import com.etiya.ecommercedemo5.entities.concretes.Payment;
 import com.etiya.ecommercedemo5.repository.abstracts.PaymentRepository;
 import lombok.AllArgsConstructor;
@@ -19,24 +22,26 @@ public class PaymentManager implements PaymentService {
     private ModelMapperService modelMapperService;
 
     @Override
-    public List<Payment> getAll() {
-        return paymentRepository.findAll();
+    public DataResult<List<Payment>> getAll() {
+        List<Payment> response = this.paymentRepository.findAll();
+        return new SuccessDataResult<List<Payment>>(response, Messages.Payment.getAllPayment);
     }
 
     @Override
-    public Payment getById(int id) {
-        return paymentRepository.findById(id).orElseThrow();
+    public DataResult<Payment> getById(int id) {
+        Payment response = this.paymentRepository.findById(id).orElseThrow();
+        return new SuccessDataResult<Payment>(response,Messages.Payment.getByPaymentId);
     }
 
     @Override
-    public AddPaymentResponse addPayment(AddPaymentRequest addPaymentRequest) {
+    public DataResult<AddPaymentResponse> addPayment(AddPaymentRequest addPaymentRequest) {
         // MAPPING => AUTO MAPPER
 
         Payment payment =
                 modelMapperService.getMapper().map(addPaymentRequest,Payment.class);
         AddPaymentResponse addPaymentResponse =
                 modelMapperService.getMapper().map(paymentRepository.save(payment),AddPaymentResponse.class);
-        return addPaymentResponse;
+        return new SuccessDataResult<AddPaymentResponse>(addPaymentResponse, Messages.Payment.addPayment);
     }
 }
 

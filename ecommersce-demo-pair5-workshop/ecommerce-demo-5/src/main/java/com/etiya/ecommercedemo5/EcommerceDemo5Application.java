@@ -10,6 +10,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -18,8 +19,11 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.servlet.LocaleResolver;
+import org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
@@ -34,6 +38,21 @@ public class EcommerceDemo5Application {
 	@Bean
 	public ModelMapper getModelMapper(){
 		return new ModelMapper();
+	}
+
+	@Bean
+	public ResourceBundleMessageSource bundleMessageSource(){
+		ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
+
+		messageSource.setBasename("messages");
+		return messageSource;
+	}
+
+	@Bean
+	public LocaleResolver localeResolver(){
+		AcceptHeaderLocaleResolver localeResolver = new AcceptHeaderLocaleResolver();
+		localeResolver.setDefaultLocale(Locale.US);
+		return localeResolver;
 	}
 
 
@@ -67,7 +86,7 @@ public class EcommerceDemo5Application {
 
 	@ExceptionHandler //500
 	@ResponseStatus(HttpStatus.NOT_FOUND)
-	public Result NotFoundException(ChangeSetPersister.NotFoundException exception){
+	public Result NotFoundException(ChangeSetPersister.NotFoundException exception) {
 		return new ErrorResult(Messages.Exception.noSuchException);
 	}
 

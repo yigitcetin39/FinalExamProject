@@ -36,20 +36,23 @@ public class AddressManager implements AddressService {
     private final AddressTitleRepository addressTitleRepository;
 
     @Override
-    public List<Address> getAll() {
-        return addressRepository.findAll();
+    public DataResult<List<Address>> getAll() {
+        List<Address> response = this.addressRepository.findAll();
+        return new SuccessDataResult<List<Address>>(response,Messages.Address.getAllAddress);
     }
 
     @Override
-    public Address getById(int id) {
-        return addressRepository.findById(id).orElseThrow();
+    public DataResult<Address> getById(int id) {
+        Address response = this.addressRepository.findById(id).orElseThrow();
+        return new SuccessDataResult<Address>(response,Messages.Address.getByAddressId);
         //return checkIfAddressExistsById(address_id);
     }
 
 
     @Override
-    public List<Address> getByName(String street) {
-        return addressRepository.findByName(street);
+    public DataResult<List<Address>> getByName(String street) {
+        List<Address> response = this.addressRepository.findByName(street);
+        return new SuccessDataResult<List<Address>>(response,Messages.Address.getStreet);
     }
 
     @Override
@@ -60,7 +63,7 @@ public class AddressManager implements AddressService {
 
 
     @Override
-    public AddAddressResponse addAddress(AddAddressRequest addAddressRequest) {
+    public DataResult<AddAddressResponse> addAddress(AddAddressRequest addAddressRequest) {
 
 
         checkIfExistsCityId(addAddressRequest.getCityId());
@@ -111,7 +114,7 @@ public class AddressManager implements AddressService {
         AddAddressResponse addAddressResponse =
                 modelMapperService.getMapper().map(addressRepository.save(address),
                         AddAddressResponse.class);
-        return addAddressResponse;
+        return new SuccessDataResult<AddAddressResponse>(addAddressResponse, Messages.Address.addAddress);
     }
 
     public void checkIfExistsCityId(int id){

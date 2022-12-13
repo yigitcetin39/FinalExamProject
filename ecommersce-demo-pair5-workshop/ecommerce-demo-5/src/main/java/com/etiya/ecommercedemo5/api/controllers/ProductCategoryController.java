@@ -4,6 +4,7 @@ package com.etiya.ecommercedemo5.api.controllers;
 import com.etiya.ecommercedemo5.business.abstracts.ProductCategoryService;
 import com.etiya.ecommercedemo5.business.dtos.request.productcategory.AddProductCategoryRequest;
 import com.etiya.ecommercedemo5.business.dtos.response.productcategory.AddProductCategoryResponse;
+import com.etiya.ecommercedemo5.core.util.results.DataResult;
 import com.etiya.ecommercedemo5.entities.concretes.ProductCategory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,12 +21,12 @@ public class ProductCategoryController {
         this.productCategoryService=productCategoryService;
     }
     @GetMapping("/getAll")
-    public List<ProductCategory> getAll() {
+    public DataResult<List<ProductCategory>> getAll() {
         return productCategoryService.getAll();
     }
 
     @GetMapping("{id}")
-    public ProductCategory getById(@PathVariable int id){
+    public DataResult<ProductCategory> getById(@PathVariable int id){
         return productCategoryService.getById(id);
     }
 
@@ -33,9 +34,9 @@ public class ProductCategoryController {
     // public List<ProductCategory> getByAllProductCategory(@RequestParam("id giriniz") int id);
 
     @PostMapping("/add")
-    public ResponseEntity<AddProductCategoryResponse> addProductCategory
+    public ResponseEntity<DataResult<AddProductCategoryResponse>> addProductCategory
             (@RequestBody AddProductCategoryRequest addProductCategoryRequest){
-        return new ResponseEntity<AddProductCategoryResponse>
+        return new ResponseEntity<DataResult<AddProductCategoryResponse>>
                 (productCategoryService.addProductCategory(addProductCategoryRequest), HttpStatus.CREATED);
     }
 }

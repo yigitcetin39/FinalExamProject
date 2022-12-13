@@ -1,6 +1,7 @@
 package com.etiya.ecommercedemo5.business.concretes;
 
 import com.etiya.ecommercedemo5.business.abstracts.CategoryService;
+import com.etiya.ecommercedemo5.business.constants.Messages;
 import com.etiya.ecommercedemo5.business.dtos.CategoryDTO;
 import com.etiya.ecommercedemo5.business.dtos.request.category.AddCategoryRequest;
 import com.etiya.ecommercedemo5.business.dtos.response.category.AddCategoryResponse;
@@ -11,6 +12,8 @@ import com.etiya.ecommercedemo5.core.util.results.SuccessDataResult;
 import com.etiya.ecommercedemo5.entities.concretes.Category;
 import com.etiya.ecommercedemo5.repository.abstracts.CategoryRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -26,21 +29,25 @@ public class CategoryManager implements CategoryService {
     private CategoryRepository categoryRepository;
     private ModelMapperService modelMapperService;
 
+    private MessageSource messageSource;
+
     @Override
-    public List<Category> getAll() {
+    public DataResult<List<Category>> getAll() {
+        List<Category> response = this.categoryRepository.findAll();
         // SAYFALAMA
         // FİLTRELEME
-        return categoryRepository.findAll();
+        return new SuccessDataResult<List<Category>>(response,Messages.Category.getAllCategory);
     }
 
     @Override
-    public Category getById(int id) {
-        return categoryRepository.findById(id).orElseThrow();
+    public DataResult<Category> getById(int id) {
+        Category response = this.categoryRepository.findById(id).orElseThrow();
+        return new SuccessDataResult<Category>(response, Messages.Category.getByCategoryId);
     }
 
     // JPA Repository SAVE methodu, eklenen veriyi geri döner.
     @Override
-    public AddCategoryResponse addCategory(AddCategoryRequest addCategoryRequest) {
+    public DataResult<AddCategoryResponse> addCategory(AddCategoryRequest addCategoryRequest) {
         // MAPPING => AUTO MAPPER
         /*Category category = new Category();
         categoryCanNotExistWithSameName(addCategoryRequest.getName());
@@ -69,7 +76,7 @@ public class CategoryManager implements CategoryService {
         AddCategoryResponse response =
                 modelMapperService.getMapper().map(savedCategory,AddCategoryResponse.class);
 
-        return response;
+        return new SuccessDataResult<AddCategoryResponse>(response, Messages.Category.addCategory);
 
 
     }
@@ -79,7 +86,8 @@ public class CategoryManager implements CategoryService {
         boolean isExists = categoryRepository.existsCategoryByName(name);
         if(isExists) // Veritabanımda bu isimde bir kategori mevcut!!
 
-            throw new BusinessException("Bu isimle bir kategori zaten mevcut!");
+            throw new BusinessException(messageSource.getMessage(Messages.Category.CategoryExistsWithSameName,null,
+                    LocaleContextHolder.getLocale()));
     }
 
     @Override

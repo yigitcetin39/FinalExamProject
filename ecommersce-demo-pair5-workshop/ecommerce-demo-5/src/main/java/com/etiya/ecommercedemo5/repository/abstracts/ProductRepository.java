@@ -2,6 +2,8 @@ package com.etiya.ecommercedemo5.repository.abstracts;
 
 import com.etiya.ecommercedemo5.business.dtos.ProductDTO;
 import com.etiya.ecommercedemo5.entities.concretes.Product;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -35,6 +37,9 @@ public interface ProductRepository extends JpaRepository<Product,Integer> {
     @Query("Select new com.etiya.ecommercedemo5.business.dtos.ProductDTO(p.id,p.name)" +
             " from Product p WHERE p.id=:id")
     List<ProductDTO> findByExampleProduct(int id);
+
+    @Query("Select p from Product as p")
+    Slice<Product> getAllWithSlice(Pageable pageable);
 
 
 

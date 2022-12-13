@@ -26,22 +26,22 @@ public class AddressController {
     }
 
     @GetMapping("/getAll")
-    public List<Address> getAll(){
+    public DataResult<List<Address>> getAll(){
         return addressService.getAll();
     }
 
     @GetMapping("/getById")
-    public Address getById(@RequestParam("id") int id){
+    public DataResult<Address> getById(@RequestParam("id") int id){
         return addressService.getById(id);
     }
     @GetMapping("{id}")
-    public Address getByIdPath(@PathVariable int id){
+    public DataResult<Address> getByIdPath(@PathVariable int id){
         return addressService.getById(id);
     }
 
 
     @GetMapping("/getByStreet")
-    public List<Address> getByStreet(@RequestParam("street") String street){
+    public DataResult<List<Address>> getByStreet(@RequestParam("street") String street){
         return addressService.getByName(street);
     }
 
@@ -53,8 +53,8 @@ public class AddressController {
     // AddCategoryRequest => name,type
     // ResponseEntity
     @PostMapping("/add")
-    public ResponseEntity<AddAddressResponse> addAddress(@RequestBody AddAddressRequest addAddressRequest){
-        return new ResponseEntity<AddAddressResponse>(addressService.addAddress(addAddressRequest), HttpStatus.CREATED);
+    public ResponseEntity<DataResult<AddAddressResponse>> addAddress(@RequestBody AddAddressRequest addAddressRequest){
+        return new ResponseEntity<DataResult<AddAddressResponse>>(addressService.addAddress(addAddressRequest), HttpStatus.CREATED);
     }
 
     @GetMapping("/findByAddressExampleDTO")

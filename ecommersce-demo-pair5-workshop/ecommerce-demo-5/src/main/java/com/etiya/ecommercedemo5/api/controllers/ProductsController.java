@@ -11,6 +11,10 @@ import com.etiya.ecommercedemo5.core.util.results.DataResult;
 import com.etiya.ecommercedemo5.entities.concretes.Product;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -31,46 +35,46 @@ public class ProductsController {
     }
 
     @GetMapping("/getAll")
-    public List<Product> getAll(){
+    public DataResult<List<Product>> getAll(){
         return productService.getAll();
     }
 
     @GetMapping("/getById")
-    public Product getById(@RequestParam("id") int id){
+    public DataResult<Product> getById(@RequestParam("id") int id){
         return productService.getById(id);
     }
     @GetMapping("{id}")
-    public Product getByIdPath(@PathVariable int id){
+    public DataResult<Product> getByIdPath(@PathVariable int id){
         return productService.getById(id);
     }
 
     @GetMapping("/getByStockGreaterThan")
-    public List<Product> getAllByStock(@RequestParam("stock") double stock){
+    public DataResult<List<Product>> getAllByStock(@RequestParam("stock") double stock){
         return productService.getAllByStockGreaterThan(stock);
     }
 
     @GetMapping("/getByExample")
-    public List<Product> getByExample(@RequestParam("colorsizeid") int colorsizeid){
+    public DataResult<List<Product>> getByExample(@RequestParam("colorsizeid") int colorsizeid){
         return productService.getByExample(colorsizeid);
     }
 
     @GetMapping("/getByName")
-    public Product getByName(@RequestParam("name") String name){
+    public DataResult<Product> getByName(@RequestParam("name") String name){
         return productService.getByName(name);
     }
 
     @GetMapping("/getByNameStartingWith")
-    public List<Product> getByNameStartingWith(@RequestParam("prefix") String prefix){
+    public DataResult<List<Product>> getByNameStartingWith(@RequestParam("prefix") String prefix){
         return productService.getByNameStartingWith(prefix);
     }
 
     @GetMapping("/getByNameLike")
-    public List<Product> getByNameLike(@RequestParam("name") String name){
+    public DataResult<List<Product>> getByNameLike(@RequestParam("name") String name){
         return productService.getByNameLike(name);
     }
 
     @GetMapping("/getByNameAsc")
-    public List<Product> getByNameOrderAsc(@RequestParam("name") String name){
+    public DataResult<List<Product>> getByNameOrderAsc(@RequestParam("name") String name){
         return productService.getByNameOrderAsc(name);
     }
 
@@ -80,14 +84,32 @@ public class ProductsController {
     // AddCategoryRequest => name,type
     // ResponseEntity
     @PostMapping("/add")
-    public ResponseEntity<AddProductResponse> addProduct(@RequestBody @Valid AddProductRequest addProductRequest){
-        return new ResponseEntity<AddProductResponse>(productService.addProduct(addProductRequest), HttpStatus.CREATED);
+    public ResponseEntity<DataResult<AddProductResponse>> addProduct(@RequestBody @Valid AddProductRequest addProductRequest){
+        return new ResponseEntity<DataResult<AddProductResponse>>(productService.addProduct(addProductRequest), HttpStatus.CREATED);
     }
 
 
     @GetMapping("/findByExampleDTO")
     public DataResult<List<ProductDTO>> findByExample(int id){
         return this.productService.findByExampleProduct(id);
+    }
+
+    @GetMapping("/api/getWithPagination")
+    //RequestParam >> page.pageSize
+    public DataResult<Page<Product>> getWithPagination(@RequestParam("page") int page, @RequestParam("pageSize") int pageSize){
+        Pageable pageable = PageRequest.of(page,pageSize);
+
+        return productService.findAllWithPagination(pageable);
+
+    }
+
+    @GetMapping("/api/getWithSlice")
+    //RequestParam >> page.pageSize
+    public DataResult<Slice<Product>> getWithSlice(@RequestParam("page") int page, @RequestParam("pageSize") int pageSize){
+        Pageable pageable = PageRequest.of(page,pageSize);
+
+        return productService.findAllWithSlice(pageable);
+
     }
 
 

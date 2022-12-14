@@ -11,5 +11,6 @@ import lombok.Setter;
 @NoArgsConstructor
 public class AddPaymentResponse {
     private int id;
+    private String name;
     private int moneyTypeId;
 }

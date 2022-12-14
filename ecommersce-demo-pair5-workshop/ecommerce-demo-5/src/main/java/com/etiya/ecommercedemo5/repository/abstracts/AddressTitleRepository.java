@@ -8,4 +8,6 @@ public interface AddressTitleRepository extends JpaRepository<AddressTitle,Integ
 
     @Query("Select at from AddressTitle as at WHERE name=:name")
     AddressTitle findByName(String name);
+
+    boolean existsAddressTitleByName(String name);
 }

@@ -17,5 +17,9 @@ public interface CityRepository extends JpaRepository<City,Integer> {
     @Query("Select c from City as c WHERE name=:name")
     City findByName(String name);
 
+    boolean existsCityByName(String name);
+
+
+
 
 }

@@ -10,5 +10,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class AddPaymentRequest {
+    private String name;
     private int moneyTypeId;
 }

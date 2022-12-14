@@ -35,6 +35,7 @@ public class Messages {
         public static final String getByAddressTitleId = "getByAddressTitleId";
         public static final String runTimeException = "runTimeExceptionAddressTitle";
         public static final String getByAddressTitleName = "getByAddressTitleName";
+        public static final String AddressTitleExistsWithSameName = "AddressTitleExistsWithSameName";
     }
 
     public static class Customer {
@@ -54,6 +55,8 @@ public class Messages {
         public static final String getByCityId= "getByCityId";
         public static final String runTimeException = "runTimeExceptionCity";
         public static final String getByCityName = "getByCityName";
+        public static final String existCity = "existCity";
+        public static final String CityExistsWithSameName = "CityExistsWithSameName";
     }
 
     public static class Color {
@@ -63,6 +66,7 @@ public class Messages {
         public static final String getByColorId= "getByColorId";
         public static final String runTimeException = "runTimeExceptionColor";
         public static final String getByColorName = "getByColorName";
+        public static final String ColorExistsWithSameName = "ColorExistsWithSameName";
     }
 
     public static class ColorSizeRelation {
@@ -81,6 +85,7 @@ public class Messages {
         public static final String getByMoneyTypeId= "getByMoneyTypeId";
         public static final String runTimeException = "runTimeExceptionMoneyType";
         public static final String getByMoneyTypeName = "getByMoneyTypeName";
+        public static final String MoneyTypeExistsWithSameName = "MoneyTypeExistsWithSameName";
     }
 
     public static class Order {
@@ -102,6 +107,8 @@ public class Messages {
         public static final String getByPaymentId= "getByPaymentId";
         public static final String runTimeException = "runTimeExceptionPayment";
         public static final String getByPaymentName = "getByPaymentName";
+        public static final String PaymentExistsWithSameName = "PaymentExistsWithSameName";
+
 
     }
 
@@ -129,6 +136,9 @@ public class Messages {
         public static final String getByColorSizeIdProduct = "getByColorSizeIdProduct";
         public static final String getByPage = "getByPage";
         public static final String getBySlice = "getBySlice";
+        public static final String ProductExistsWithSameName = "ProductExistsWithSameName";
+        public static final String getProductGreaterThanStock = "getProductGreaterThanStock";
+
 
     }
 
@@ -140,6 +150,18 @@ public class Messages {
         public static final String runTimeException = "runTimeExceptionSize";
         public static final String getBySizeName = "getBySizeName";
         public static final String getBySizeGreaterThanStock = "getBySizeGreaterThanStock";
+        public static final String SizeExistsWithSameName = "SizeExistsWithSameName";
+    }
+
+    public static class Cargo {
+        public static final String CheckIfExistsCargoId = "CheckIfExistsCargoId";
+        public static final String addCargo="addCargo";
+        public static final String getAllCargo= "getAllCargo";
+        public static final String getByCargoId= "getByCargoId";
+        public static final String runTimeExceptionCargo = "runTimeExceptionCargo";
+        public static final String getByCargoName = "getByCargoName";
+        public static final String CargoExistsWithSameName = "CargoExistsWithSameName";
+        public static final String getCargoPriceGreaterThan = "getCargoPriceGreaterThan";
     }
 
 

@@ -19,7 +19,10 @@ import com.etiya.ecommercedemo5.entities.concretes.Customer;
 import com.etiya.ecommercedemo5.repository.abstracts.AddressRepository;
 import com.etiya.ecommercedemo5.repository.abstracts.AddressTitleRepository;
 import com.etiya.ecommercedemo5.repository.abstracts.CityRepository;
+import com.etiya.ecommercedemo5.repository.abstracts.CustomerRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -33,18 +36,20 @@ public class AddressManager implements AddressService {
     private CustomerService customerService;
     private CityRepository cityRepository;
     private ModelMapperService modelMapperService;
-    private final AddressTitleRepository addressTitleRepository;
+    private AddressTitleRepository addressTitleRepository;
+    private CustomerRepository customerRepository;
+    private MessageSource messageSource;
 
     @Override
     public DataResult<List<Address>> getAll() {
         List<Address> response = this.addressRepository.findAll();
-        return new SuccessDataResult<List<Address>>(response,Messages.Address.getAllAddress);
+        return new SuccessDataResult<List<Address>>(response,messageSource.getMessage(Messages.Address.getAllAddress,null,LocaleContextHolder.getLocale()));
     }
 
     @Override
     public DataResult<Address> getById(int id) {
         Address response = this.addressRepository.findById(id).orElseThrow();
-        return new SuccessDataResult<Address>(response,Messages.Address.getByAddressId);
+        return new SuccessDataResult<Address>(response,messageSource.getMessage(Messages.Address.getByAddressId,null,LocaleContextHolder.getLocale()));
         //return checkIfAddressExistsById(address_id);
     }
 
@@ -52,7 +57,7 @@ public class AddressManager implements AddressService {
     @Override
     public DataResult<List<Address>> getByName(String street) {
         List<Address> response = this.addressRepository.findByName(street);
-        return new SuccessDataResult<List<Address>>(response,Messages.Address.getStreet);
+        return new SuccessDataResult<List<Address>>(response,messageSource.getMessage(Messages.Address.getStreet,null,LocaleContextHolder.getLocale()));
     }
 
     @Override
@@ -67,7 +72,7 @@ public class AddressManager implements AddressService {
 
 
         checkIfExistsCityId(addAddressRequest.getCityId());
-        checkIfExistsAddressTitleId(addAddressRequest.getAddrestitleId());
+        checkIfExistsAddressTitleId(addAddressRequest.getAddressTitleId());
         checkIfExistsCustomerId(addAddressRequest.getCustomerId());
 
 
@@ -114,28 +119,31 @@ public class AddressManager implements AddressService {
         AddAddressResponse addAddressResponse =
                 modelMapperService.getMapper().map(addressRepository.save(address),
                         AddAddressResponse.class);
-        return new SuccessDataResult<AddAddressResponse>(addAddressResponse, Messages.Address.addAddress);
+        return new SuccessDataResult<AddAddressResponse>(addAddressResponse, messageSource.getMessage(Messages.Address.addAddress,null,LocaleContextHolder.getLocale()));
     }
 
     public void checkIfExistsCityId(int id){
         boolean isExists = cityRepository.existsById(id);
         if (!isExists){
-            throw new BusinessException(Messages.City.runTimeException);
+            throw new BusinessException(messageSource.getMessage(Messages.City.runTimeException,null, LocaleContextHolder.getLocale()));
         }
     }
 
     public void checkIfExistsAddressTitleId(int id){
         boolean isExists = addressTitleRepository.existsById(id);
         if (!isExists){
-            throw new BusinessException(Messages.AddressTitle.runTimeException);
+            throw new BusinessException(messageSource.getMessage(Messages.AddressTitle.runTimeException,null, LocaleContextHolder.getLocale()));
         }
     }
     public void checkIfExistsCustomerId(int id){
-        boolean isExists = addressTitleRepository.existsById(id);
+        boolean isExists = customerRepository.existsById(id);
         if (!isExists){
-            throw new BusinessException(Messages.Customer.runTimeException);
+            throw new BusinessException(messageSource.getMessage(Messages.Customer.runTimeException,null, LocaleContextHolder.getLocale()));
         }
     }
+
+
+
 
 
         /*

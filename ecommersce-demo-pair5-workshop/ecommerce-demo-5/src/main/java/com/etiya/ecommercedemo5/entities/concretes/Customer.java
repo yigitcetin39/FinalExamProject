@@ -31,7 +31,7 @@ public class Customer {
     private String lastname;
 
     @Column(name = "phonenumber")
-    private String phonenumber;
+    private String phoneNumber;
 
     @Column(name = "birthday",nullable = true)
     private java.sql.Timestamp birthday;

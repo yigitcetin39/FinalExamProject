@@ -10,7 +10,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class AddAddressRequest {
-    private int addrestitleId;
+    private int addressTitleId;
     private String street;
     private int cityId;
     private int customerId;

@@ -26,6 +26,9 @@ public class Payment {
     @Column(name = "id")
     private int id;
 
+    @Column(name = "name")
+    private String name;
+
     @OneToMany(mappedBy = "payment")
     @JsonIgnore
     private List<Order> orders;

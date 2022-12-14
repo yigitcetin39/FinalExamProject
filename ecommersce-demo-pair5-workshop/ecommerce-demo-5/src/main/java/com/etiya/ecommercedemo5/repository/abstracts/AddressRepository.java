@@ -11,6 +11,7 @@ public interface AddressRepository extends JpaRepository<Address,Integer> {
     @Query("Select a from Address as a WHERE street=:name")
     List<Address> findByName(String name);
 
+
     @Query("Select new com.etiya.ecommercedemo5.business.dtos.AddressDTO(a.id,a.street)" +
             " from Address a WHERE a.id=:id")
     List<AddressDTO> findByAddressExample(int id);

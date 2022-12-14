@@ -36,13 +36,13 @@ public class CategoryManager implements CategoryService {
         List<Category> response = this.categoryRepository.findAll();
         // SAYFALAMA
         // FİLTRELEME
-        return new SuccessDataResult<List<Category>>(response,Messages.Category.getAllCategory);
+        return new SuccessDataResult<List<Category>>(response,messageSource.getMessage(Messages.Category.getAllCategory,null,LocaleContextHolder.getLocale()));
     }
 
     @Override
     public DataResult<Category> getById(int id) {
         Category response = this.categoryRepository.findById(id).orElseThrow();
-        return new SuccessDataResult<Category>(response, Messages.Category.getByCategoryId);
+        return new SuccessDataResult<Category>(response, messageSource.getMessage(Messages.Category.getByCategoryId,null,LocaleContextHolder.getLocale()));
     }
 
     // JPA Repository SAVE methodu, eklenen veriyi geri döner.
@@ -76,7 +76,7 @@ public class CategoryManager implements CategoryService {
         AddCategoryResponse response =
                 modelMapperService.getMapper().map(savedCategory,AddCategoryResponse.class);
 
-        return new SuccessDataResult<AddCategoryResponse>(response, Messages.Category.addCategory);
+        return new SuccessDataResult<AddCategoryResponse>(response, messageSource.getMessage(Messages.Category.addCategory,null,LocaleContextHolder.getLocale()));
 
 
     }

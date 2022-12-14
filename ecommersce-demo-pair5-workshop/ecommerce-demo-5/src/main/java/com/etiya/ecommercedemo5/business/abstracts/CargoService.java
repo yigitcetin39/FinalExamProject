@@ -4,16 +4,17 @@ package com.etiya.ecommercedemo5.business.abstracts;
 
 import com.etiya.ecommercedemo5.business.dtos.request.cargo.AddCargoRequest;
 import com.etiya.ecommercedemo5.business.dtos.response.cargo.AddCargoResponse;
+import com.etiya.ecommercedemo5.core.util.results.DataResult;
 import com.etiya.ecommercedemo5.entities.concretes.Cargo;
 
 import java.util.List;
 
 public interface CargoService {
 
-    List<Cargo> getAll();
-    Cargo getById(int id);
-    List<Cargo> getAllByPriceGreaterThan(int price);
-    Cargo getByName(String name);
+    DataResult<List<Cargo>> getAll();
+    DataResult<Cargo> getById(int id);
+    DataResult<List<Cargo>> getAllByPriceGreaterThan(int price);
+    DataResult<Cargo> getByName(String name);
 
-    AddCargoResponse addCargo(AddCargoRequest addCargoRequest);
+    DataResult<AddCargoResponse> addCargo(AddCargoRequest addCargoRequest);
 }

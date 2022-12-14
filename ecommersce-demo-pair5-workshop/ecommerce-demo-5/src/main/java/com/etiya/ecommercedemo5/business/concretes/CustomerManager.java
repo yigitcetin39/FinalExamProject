@@ -11,6 +11,8 @@ import com.etiya.ecommercedemo5.core.util.results.SuccessDataResult;
 import com.etiya.ecommercedemo5.entities.concretes.Customer;
 import com.etiya.ecommercedemo5.repository.abstracts.CustomerRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 
 
@@ -21,16 +23,17 @@ import java.util.List;
 public class CustomerManager implements CustomerService {
     private CustomerRepository customerRepository;
     private ModelMapperService modelMapperService;
+    private MessageSource messageSource;
     @Override
     public DataResult<List<Customer>> getAll() {
         List<Customer> response = this.customerRepository.findAll();
-        return new SuccessDataResult<List<Customer>>(response, Messages.Customer.getAllCustomers);
+        return new SuccessDataResult<List<Customer>>(response, messageSource.getMessage(Messages.Customer.getAllCustomers,null,LocaleContextHolder.getLocale()));
     }
 
     @Override
     public DataResult<Customer> getById(int id) {
         Customer response = this.customerRepository.findById(id);
-        return new SuccessDataResult<Customer>(response, Messages.Customer.getByCustomerId);
+        return new SuccessDataResult<Customer>(response, messageSource.getMessage(Messages.Customer.getByCustomerId,null,LocaleContextHolder.getLocale()));
     }
 
 
@@ -38,23 +41,25 @@ public class CustomerManager implements CustomerService {
     @Override
     public DataResult<Customer> getByFirstName(String name) {
         Customer response = this.customerRepository.findByCustomerFirstName(name);
-        return new SuccessDataResult<Customer>(response,Messages.Customer.getFirstName);
+        return new SuccessDataResult<Customer>(response,messageSource.getMessage(Messages.Customer.getFirstName,null,LocaleContextHolder.getLocale()));
     }
 
     @Override
     public DataResult<Customer> getByLastName(String name) {
         Customer response = this.customerRepository.findByCustomerLastName(name);
-        return new SuccessDataResult<Customer>(response,Messages.Customer.getLastName);
+        return new SuccessDataResult<Customer>(response,messageSource.getMessage(Messages.Customer.getLastName,null,LocaleContextHolder.getLocale()));
     }
 
     @Override
     public DataResult<List<Customer>> getAllNameAsc(int id) {
         List<Customer> response = this.customerRepository.findAllCustomerByIdOrderByIdAsc(id);
-        return new SuccessDataResult<List<Customer>>(response,Messages.Customer.getByCustomerId);
+        return new SuccessDataResult<List<Customer>>(response,messageSource.getMessage(Messages.Customer.getAllCustomers,null,LocaleContextHolder.getLocale()));
     }
+
 
     @Override
     public DataResult<AddCustomerResponse> addCustomer(AddCustomerRequest addCustomerRequest) {
+
         /*Customer customer = new Customer();
         customer.setFirstname(addCustomerRequest.getFirstname());
         customer.setLastname(addCustomerRequest.getLastname());
@@ -71,8 +76,10 @@ public class CustomerManager implements CustomerService {
                 modelMapperService.getMapper().map(addCustomerRequest,Customer.class);
         AddCustomerResponse addCustomerResponse =
                 modelMapperService.getMapper().map(customerRepository.save(customer),AddCustomerResponse.class);
-        return new SuccessDataResult<AddCustomerResponse>(addCustomerResponse,Messages.Customer.addCustomer);
+        return new SuccessDataResult<AddCustomerResponse>(addCustomerResponse,messageSource.getMessage(Messages.Customer.addCustomer,null, LocaleContextHolder.getLocale()));
 
 
     }
+
+
 }

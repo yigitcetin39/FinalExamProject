@@ -18,4 +18,6 @@ public interface CargoRepository extends JpaRepository<Cargo,Integer> {
     // :parametreIsmi
     @Query("Select c from Cargo as c WHERE name=:name")
     Cargo findByName(String name);
+
+    boolean existsCargoByName(String name);
 }

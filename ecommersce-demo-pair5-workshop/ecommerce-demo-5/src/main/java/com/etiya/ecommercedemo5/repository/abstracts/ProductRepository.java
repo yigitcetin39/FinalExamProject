@@ -41,6 +41,8 @@ public interface ProductRepository extends JpaRepository<Product,Integer> {
     @Query("Select p from Product as p")
     Slice<Product> getAllWithSlice(Pageable pageable);
 
+    boolean existsProductByName(String name);
+
 
 
 }

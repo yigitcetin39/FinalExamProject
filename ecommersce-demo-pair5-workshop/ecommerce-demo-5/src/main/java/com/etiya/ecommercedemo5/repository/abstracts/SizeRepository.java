@@ -14,4 +14,6 @@ public interface SizeRepository extends JpaRepository<Size,Integer> {
 
     @Query("Select s from Size as s WHERE name=:name")
     Size findByName(String name);
+
+    boolean existsSizeByName(String name);
 }

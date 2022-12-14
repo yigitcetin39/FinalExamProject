@@ -7,4 +7,6 @@ import org.springframework.data.jpa.repository.Query;
 public interface MoneyTypeRepository extends JpaRepository<MoneyType,Integer> {
     @Query("Select mt from Product as mt WHERE name=:name")
     MoneyType findByName(String name);
+
+    boolean existsMoneyTypeByName(String name);
 }

@@ -9,10 +9,13 @@ import com.etiya.ecommercedemo5.core.util.mapping.ModelMapperService;
 import com.etiya.ecommercedemo5.core.util.results.DataResult;
 import com.etiya.ecommercedemo5.core.util.results.SuccessDataResult;
 import com.etiya.ecommercedemo5.entities.concretes.City;
+import com.etiya.ecommercedemo5.entities.concretes.Color;
 import com.etiya.ecommercedemo5.repository.abstracts.CityRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -76,5 +79,11 @@ public class CityManager implements CityService {
         if (isExists){
             throw new BusinessException(messageSource.getMessage(Messages.City.CityExistsWithSameName,null, LocaleContextHolder.getLocale()));
         }
+    }
+
+    @Override
+    public DataResult<Page<City>> findAllWithPagination(Pageable pageable) {
+        Page<City> response = this.cityRepository.findAll(pageable);
+        return new SuccessDataResult<Page<City>>(response,messageSource.getMessage(Messages.City.getByPage,null,LocaleContextHolder.getLocale()));
     }
 }

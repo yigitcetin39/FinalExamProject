@@ -9,10 +9,13 @@ import com.etiya.ecommercedemo5.core.util.mapping.ModelMapperService;
 import com.etiya.ecommercedemo5.core.util.results.DataResult;
 import com.etiya.ecommercedemo5.core.util.results.SuccessDataResult;
 import com.etiya.ecommercedemo5.entities.concretes.MoneyType;
+import com.etiya.ecommercedemo5.entities.concretes.Order;
 import com.etiya.ecommercedemo5.repository.abstracts.MoneyTypeRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -60,6 +63,12 @@ public class MoneyTypeManager implements MoneyTypeService {
         if(isExists) // Veritabanımda bu isimde bir moneyType mevcut!!
             throw new BusinessException(messageSource.getMessage(Messages.MoneyType.MoneyTypeExistsWithSameName,null,
                     LocaleContextHolder.getLocale()));
+    }
+
+    @Override
+    public DataResult<Page<MoneyType>> findAllWithPagination(Pageable pageable) {
+        Page<MoneyType> response = this.moneyTypeRepository.findAll(pageable);
+        return new SuccessDataResult<Page<MoneyType>>(response,messageSource.getMessage(Messages.MoneyType.getByPage,null,LocaleContextHolder.getLocale()));
     }
 
 

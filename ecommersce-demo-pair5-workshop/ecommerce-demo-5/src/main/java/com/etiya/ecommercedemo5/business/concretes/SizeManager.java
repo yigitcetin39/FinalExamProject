@@ -10,12 +10,15 @@ import com.etiya.ecommercedemo5.core.util.exceptions.BusinessException;
 import com.etiya.ecommercedemo5.core.util.mapping.ModelMapperService;
 import com.etiya.ecommercedemo5.core.util.results.DataResult;
 import com.etiya.ecommercedemo5.core.util.results.SuccessDataResult;
+import com.etiya.ecommercedemo5.entities.concretes.Product;
 import com.etiya.ecommercedemo5.entities.concretes.Size;
 
 import com.etiya.ecommercedemo5.repository.abstracts.SizeRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -78,5 +81,11 @@ public class SizeManager implements SizeService {
 
             throw new BusinessException(messageSource.getMessage(Messages.Size.SizeExistsWithSameName,null,
                     LocaleContextHolder.getLocale()));
+    }
+
+    @Override
+    public DataResult<Page<Size>> findAllWithPagination(Pageable pageable) {
+        Page<Size> response = this.sizeRepository.findAll(pageable);
+        return new SuccessDataResult<Page<Size>>(response,messageSource.getMessage(Messages.Size.getByPage,null,LocaleContextHolder.getLocale()));
     }
 }

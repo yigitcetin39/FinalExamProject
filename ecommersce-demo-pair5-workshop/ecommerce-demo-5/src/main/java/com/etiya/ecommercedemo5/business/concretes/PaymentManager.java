@@ -9,10 +9,13 @@ import com.etiya.ecommercedemo5.core.util.mapping.ModelMapperService;
 import com.etiya.ecommercedemo5.core.util.results.DataResult;
 import com.etiya.ecommercedemo5.core.util.results.SuccessDataResult;
 import com.etiya.ecommercedemo5.entities.concretes.Payment;
+import com.etiya.ecommercedemo5.entities.concretes.ProductCategory;
 import com.etiya.ecommercedemo5.repository.abstracts.PaymentRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -57,6 +60,12 @@ public class PaymentManager implements PaymentService {
 
             throw new BusinessException(messageSource.getMessage(Messages.Payment.PaymentExistsWithSameName,null,
                     LocaleContextHolder.getLocale()));
+    }
+
+    @Override
+    public DataResult<Page<Payment>> findAllWithPagination(Pageable pageable) {
+        Page<Payment> response = this.paymentRepository.findAll(pageable);
+        return new SuccessDataResult<Page<Payment>>(response,messageSource.getMessage(Messages.Payment.getByPage,null,LocaleContextHolder.getLocale()));
     }
 }
 

@@ -7,6 +7,7 @@ import com.etiya.ecommercedemo5.core.util.exceptions.BusinessException;
 import com.etiya.ecommercedemo5.core.util.mapping.ModelMapperService;
 import com.etiya.ecommercedemo5.core.util.results.DataResult;
 import com.etiya.ecommercedemo5.core.util.results.SuccessDataResult;
+import com.etiya.ecommercedemo5.entities.concretes.Product;
 import com.etiya.ecommercedemo5.entities.concretes.ProductCategory;
 import com.etiya.ecommercedemo5.repository.abstracts.CategoryRepository;
 import com.etiya.ecommercedemo5.repository.abstracts.ProductCategoryRepository;
@@ -14,6 +15,8 @@ import com.etiya.ecommercedemo5.repository.abstracts.ProductRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -79,5 +82,11 @@ public class ProductCategoryManager implements ProductCategoryService {
         if (!isExists){
             throw new BusinessException(messageSource.getMessage(Messages.Category.runTimeException,null, LocaleContextHolder.getLocale()));
         }
+    }
+
+    @Override
+    public DataResult<Page<ProductCategory>> findAllWithPagination(Pageable pageable) {
+        Page<ProductCategory> response = this.productCategoryRepository.findAll(pageable);
+        return new SuccessDataResult<Page<ProductCategory>>(response,messageSource.getMessage(Messages.ProductCategory.getByPage,null,LocaleContextHolder.getLocale()));
     }
 }

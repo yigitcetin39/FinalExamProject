@@ -23,6 +23,8 @@ import com.etiya.ecommercedemo5.repository.abstracts.CustomerRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -140,6 +142,12 @@ public class AddressManager implements AddressService {
         if (!isExists){
             throw new BusinessException(messageSource.getMessage(Messages.Customer.runTimeException,null, LocaleContextHolder.getLocale()));
         }
+    }
+
+    @Override
+    public DataResult<Page<Address>> findAllWithPagination(Pageable pageable) {
+        Page<Address> response = this.addressRepository.findAll(pageable);
+        return new SuccessDataResult<Page<Address>>(response,messageSource.getMessage(Messages.Address.getByPage,null,LocaleContextHolder.getLocale()));
     }
 
 

@@ -9,10 +9,13 @@ import com.etiya.ecommercedemo5.core.util.mapping.ModelMapperService;
 import com.etiya.ecommercedemo5.core.util.results.DataResult;
 import com.etiya.ecommercedemo5.core.util.results.SuccessDataResult;
 import com.etiya.ecommercedemo5.entities.concretes.Customer;
+import com.etiya.ecommercedemo5.entities.concretes.MoneyType;
 import com.etiya.ecommercedemo5.repository.abstracts.CustomerRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 
@@ -79,6 +82,12 @@ public class CustomerManager implements CustomerService {
         return new SuccessDataResult<AddCustomerResponse>(addCustomerResponse,messageSource.getMessage(Messages.Customer.addCustomer,null, LocaleContextHolder.getLocale()));
 
 
+    }
+
+    @Override
+    public DataResult<Page<Customer>> findAllWithPagination(Pageable pageable) {
+        Page<Customer> response = this.customerRepository.findAll(pageable);
+        return new SuccessDataResult<Page<Customer>>(response,messageSource.getMessage(Messages.Customer.getByPage,null,LocaleContextHolder.getLocale()));
     }
 
 

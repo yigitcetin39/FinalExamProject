@@ -9,11 +9,14 @@ import com.etiya.ecommercedemo5.core.util.mapping.ModelMapperService;
 import com.etiya.ecommercedemo5.core.util.results.DataResult;
 import com.etiya.ecommercedemo5.core.util.results.SuccessDataResult;
 import com.etiya.ecommercedemo5.entities.concretes.Color;
+import com.etiya.ecommercedemo5.entities.concretes.Customer;
 import com.etiya.ecommercedemo5.repository.abstracts.ColorRepository;
 import lombok.AllArgsConstructor;
 import org.aspectj.apache.bcel.generic.MethodGen;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 
@@ -74,5 +77,11 @@ public class ColorManager implements ColorService {
         if(isExists) // Veritabanımda bu isimde bir renk mevcut!!
             throw new BusinessException(messageSource.getMessage(Messages.Color.ColorExistsWithSameName,null,
                     LocaleContextHolder.getLocale()));
+    }
+
+    @Override
+    public DataResult<Page<Color>> findAllWithPagination(Pageable pageable) {
+        Page<Color> response = this.colorRepository.findAll(pageable);
+        return new SuccessDataResult<Page<Color>>(response,messageSource.getMessage(Messages.Color.getByPage,null,LocaleContextHolder.getLocale()));
     }
 }

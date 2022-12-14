@@ -13,10 +13,13 @@ import com.etiya.ecommercedemo5.core.util.results.DataResult;
 import com.etiya.ecommercedemo5.core.util.results.SuccessDataResult;
 import com.etiya.ecommercedemo5.entities.concretes.Cargo;
 
+import com.etiya.ecommercedemo5.entities.concretes.Category;
 import com.etiya.ecommercedemo5.repository.abstracts.CargoRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -82,5 +85,11 @@ public class CargoManager implements CargoService {
 
             throw new BusinessException(messageSource.getMessage(Messages.Cargo.CargoExistsWithSameName,null,
                     LocaleContextHolder.getLocale()));
+    }
+
+    @Override
+    public DataResult<Page<Cargo>> findAllWithPagination(Pageable pageable) {
+        Page<Cargo> response = this.cargoRepository.findAll(pageable);
+        return new SuccessDataResult<Page<Cargo>>(response,messageSource.getMessage(Messages.Cargo.getByPage,null,LocaleContextHolder.getLocale()));
     }
 }

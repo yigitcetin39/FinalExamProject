@@ -9,10 +9,13 @@ import com.etiya.ecommercedemo5.core.util.mapping.ModelMapperService;
 import com.etiya.ecommercedemo5.core.util.results.DataResult;
 import com.etiya.ecommercedemo5.core.util.results.SuccessDataResult;
 import com.etiya.ecommercedemo5.entities.concretes.Order;
+import com.etiya.ecommercedemo5.entities.concretes.Payment;
 import com.etiya.ecommercedemo5.repository.abstracts.*;
 import lombok.AllArgsConstructor;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
@@ -116,6 +119,12 @@ public class OrderManager implements OrderService {
         if (!isExists){
             throw new BusinessException(messageSource.getMessage(Messages.Product.runTimeException,null, LocaleContextHolder.getLocale()));
         }
+    }
+
+    @Override
+    public DataResult<Page<Order>> findAllWithPagination(Pageable pageable) {
+        Page<Order> response = this.orderRepository.findAll(pageable);
+        return new SuccessDataResult<Page<Order>>(response,messageSource.getMessage(Messages.Order.getByPage,null,LocaleContextHolder.getLocale()));
     }
 
 }

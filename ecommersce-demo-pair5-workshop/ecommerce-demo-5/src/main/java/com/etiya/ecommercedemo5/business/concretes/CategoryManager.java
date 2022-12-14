@@ -10,10 +10,13 @@ import com.etiya.ecommercedemo5.core.util.mapping.ModelMapperService;
 import com.etiya.ecommercedemo5.core.util.results.DataResult;
 import com.etiya.ecommercedemo5.core.util.results.SuccessDataResult;
 import com.etiya.ecommercedemo5.entities.concretes.Category;
+import com.etiya.ecommercedemo5.entities.concretes.City;
 import com.etiya.ecommercedemo5.repository.abstracts.CategoryRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -94,6 +97,12 @@ public class CategoryManager implements CategoryService {
     public DataResult<List<CategoryDTO>> findByCategoryExample(int id) {
         List<CategoryDTO> response = categoryRepository.findByCategoryExample(id);
         return new SuccessDataResult<List<CategoryDTO>>(response);
+    }
+
+    @Override
+    public DataResult<Page<Category>> findAllWithPagination(Pageable pageable) {
+        Page<Category> response = this.categoryRepository.findAll(pageable);
+        return new SuccessDataResult<Page<Category>>(response,messageSource.getMessage(Messages.Category.getByPage,null,LocaleContextHolder.getLocale()));
     }
 
 

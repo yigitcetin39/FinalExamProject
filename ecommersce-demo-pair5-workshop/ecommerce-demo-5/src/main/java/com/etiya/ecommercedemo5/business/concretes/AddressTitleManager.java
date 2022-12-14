@@ -9,11 +9,14 @@ import com.etiya.ecommercedemo5.core.util.mapping.ModelMapperService;
 import com.etiya.ecommercedemo5.core.util.results.DataResult;
 import com.etiya.ecommercedemo5.core.util.results.SuccessDataResult;
 import com.etiya.ecommercedemo5.entities.concretes.AddressTitle;
+import com.etiya.ecommercedemo5.entities.concretes.Cargo;
 import com.etiya.ecommercedemo5.repository.abstracts.AddressTitleRepository;
 
 import lombok.AllArgsConstructor;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -77,5 +80,11 @@ public class AddressTitleManager implements AddressTitleService {
 
             throw new BusinessException(messageSource.getMessage(Messages.AddressTitle.AddressTitleExistsWithSameName,null,
                     LocaleContextHolder.getLocale()));
+    }
+
+    @Override
+    public DataResult<Page<AddressTitle>> findAllWithPagination(Pageable pageable) {
+        Page<AddressTitle> response = this.addressTitleRepository.findAll(pageable);
+        return new SuccessDataResult<Page<AddressTitle>>(response,messageSource.getMessage(Messages.AddressTitle.getByPage,null,LocaleContextHolder.getLocale()));
     }
 }

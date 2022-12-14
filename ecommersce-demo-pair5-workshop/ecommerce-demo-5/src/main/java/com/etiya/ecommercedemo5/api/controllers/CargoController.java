@@ -7,7 +7,11 @@ import com.etiya.ecommercedemo5.business.dtos.response.cargo.AddCargoResponse;
 import com.etiya.ecommercedemo5.business.dtos.response.category.AddCategoryResponse;
 import com.etiya.ecommercedemo5.core.util.results.DataResult;
 import com.etiya.ecommercedemo5.entities.concretes.Cargo;
+import com.etiya.ecommercedemo5.entities.concretes.ProductCategory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -59,5 +63,14 @@ public class CargoController {
     @PostMapping("/add")
     public ResponseEntity<DataResult<AddCargoResponse>> addCargo(@RequestBody AddCargoRequest addCargoRequest){
         return new ResponseEntity<DataResult<AddCargoResponse>>(cargoService.addCargo(addCargoRequest), HttpStatus.CREATED);
+    }
+
+    @GetMapping("/api/getWithPagination")
+    //RequestParam >> page.pageSize
+    public DataResult<Page<Cargo>> getWithPagination(@RequestParam("page") int page, @RequestParam("pageSize") int pageSize){
+        Pageable pageable = PageRequest.of(page,pageSize);
+
+        return cargoService.findAllWithPagination(pageable);
+
     }
 }

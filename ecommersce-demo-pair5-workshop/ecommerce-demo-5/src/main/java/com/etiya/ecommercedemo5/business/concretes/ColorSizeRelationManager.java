@@ -12,6 +12,7 @@ import com.etiya.ecommercedemo5.core.util.results.DataResult;
 import com.etiya.ecommercedemo5.core.util.results.SuccessDataResult;
 import com.etiya.ecommercedemo5.entities.concretes.Color;
 import com.etiya.ecommercedemo5.entities.concretes.ColorSizeRelation;
+import com.etiya.ecommercedemo5.entities.concretes.Customer;
 import com.etiya.ecommercedemo5.entities.concretes.Size;
 import com.etiya.ecommercedemo5.repository.abstracts.ColorRepository;
 import com.etiya.ecommercedemo5.repository.abstracts.ColorSizeRepository;
@@ -19,6 +20,8 @@ import com.etiya.ecommercedemo5.repository.abstracts.SizeRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -83,14 +86,20 @@ public class ColorSizeRelationManager implements ColorSizeRelationService {
     public void checkIfExistsColorId(int id){
         boolean isExists = colorRepository.existsById(id);
         if (!isExists){
-            throw new BusinessException(messageSource.getMessage(Messages.Color.runTimeException,null, LocaleContextHolder.getLocale()));
+            throw new BusinessException(messageSource.getMessage(Messages.ColorSizeRelation.runTimeException,null, LocaleContextHolder.getLocale()));
         }
+    }
+
+    @Override
+    public DataResult<Page<ColorSizeRelation>> findAllWithPagination(Pageable pageable) {
+        Page<ColorSizeRelation> response = this.colorSizeRepository.findAll(pageable);
+        return new SuccessDataResult<Page<ColorSizeRelation>>(response,messageSource.getMessage(Messages.ColorSizeRelation.getByPage,null,LocaleContextHolder.getLocale()));
     }
 
     public void checkIfExistsSizeId(int id){
         boolean isExists = sizeRepository.existsById(id);
         if (!isExists){
-            throw new BusinessException(messageSource.getMessage(Messages.Size.runTimeException,null, LocaleContextHolder.getLocale()));
+            throw new BusinessException(messageSource.getMessage(Messages.ColorSizeRelation.runTimeException,null, LocaleContextHolder.getLocale()));
         }
     }
 
